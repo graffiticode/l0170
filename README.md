@@ -1,51 +1,71 @@
-# L0170
+# L0170 - Data Transformation Language
 
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](packages/LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](LICENSE-DOCS)
 
-L0170 is a **template for creating new Graffiticode languages**. Clone this repository when starting a new language.
+A Graffiticode language for data transformation inspired by dplyr and jq.
 
-## What it provides
+## Operations
 
-L0170 includes example implementations to demonstrate how to build language features:
+| Operation | Description |
+|-----------|-------------|
+| `fetch <url>` | Fetch JSON or CSV data from a URL |
+| `get <path> <data>` | Navigate into nested data by dot-path |
+| `filter <predicate> <data>` | Keep rows matching a predicate |
+| `select <fields> <data>` | Pick or rename fields (supports dot-paths) |
+| `mutate <spec> <data>` | Add or compute new fields |
+| `group <spec> <data>` | Group by key and aggregate (count, sum, avg, min, max) |
+| `sort <field|spec> <data>` | Sort by field, ascending or descending |
+| `take <n|spec> <data>` | First or last N items |
+| `join <spec> <data>` | Left join two arrays by key |
+| `flatten <depth|field> <data>` | Flatten nested arrays or extract nested fields |
+| `unique <field|fields> <data>` | Deduplicate by field(s) |
 
-| Function | Purpose |
-|----------|---------|
-| `hello <string>` | Example text output |
-| `theme [dark\|light] <expr>` | Example interactive UI with toggle |
-| `image <url>` | Example image rendering |
+Additional operations from basis: `map`, `apply`, `val`, `key`, `len`, `concat`, `add`, `mul`, `pow`, `style`, `arg`, `data`
 
-## Usage
+## Examples
 
-When creating a new Graffiticode language:
+```
+| Fetch JSON data
+fetch "https://jsonplaceholder.typicode.com/users"
 
-1. Clone this repository
-2. Update the port number and language ID
-3. Replace the example functions with your language's vocabulary
-4. Customize the form view for your output rendering needs
+| Navigate into nested data
+get "results.items" fetch "https://example.com/api.json"
 
-The `theme` feature demonstrates how to build interactive UI components - use it as a reference when adding interactivity to your language.
+| Filter with comparison operators (eq, ne, gt, ge, lt, le, contains, startsWith, endsWith)
+filter {age: {gt: 30}} data
+filter {age: {ge: 18, lt: 65}} data
 
-## Architecture
+| Select fields (supports dot-paths for nested data)
+select ["player.name", "goals"] data
+select [{from: "firstName", to: "name"}] data
 
-- **packages/api** - Node.js/Express backend compiler
-- **packages/app** - React/TypeScript frontend
+| Compute new fields
+mutate {fullName: {concat: ["first", " ", "last"]}} data
+mutate {total: {add: ["price", "tax"]}} data
 
-Standard Graffiticode compiler pipeline: Checker (validates AST) → Transformer (produces output).
+| Group and aggregate
+group {by: "department", count: "n", avg: "salary"} data
 
-## Related languages
+| Sort ascending or descending
+sort "name" data
+sort {field: "age", order: "desc"} data
 
-- **L0011** - Production language for form generation (console property editor)
-- **L0012** - Production language for data capture (idempotent value-to-ID mapping)
+| Limit results
+take 10 data
+take {last: 5} data
 
-## Getting started
+| Pipeline: fetch, navigate, filter, select, sort
+sort "name" select ["player.name", "goals"]
+  filter {goals: {gt: 10}} get "top_scorers"
+  fetch "https://example.com/stats.json"
+```
+
+## Development
 
 ```bash
-# Install dependencies
 npm install
-
-# Start the API server
-npm start
+npm run dev
 ```
 
 ## License
