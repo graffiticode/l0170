@@ -11,6 +11,7 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
   - Comparison operators: `eq`, `ne`, `gt`, `ge`, `lt`, `le`
   - String operators: `contains`, `startsWith`, `endsWith`
   - Equality shorthand: `filter {status: "active"} data`
+  - Dot-paths for nested fields use quoted strings as record keys: `filter {"address.city": {eq: "Springfield"}} data` (not nested records)
 - Use `select` to pick or rename fields: `select ["name", "age"] data`
   - Dot-paths for nested fields: `select ["player.name", "goals"] data`
   - Rename with records: `select [{from: "firstName", to: "name"}] data`
