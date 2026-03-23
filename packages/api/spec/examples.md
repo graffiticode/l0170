@@ -6,135 +6,135 @@
 ## Category 1: Fetch (1–8)
 
 1. Fetches JSON data from "https://jsonplaceholder.typicode.com/users".
-2. Fetches CSV data from "https://example.com/sales.csv".
-3. Fetches JSON data from "https://example.com/api/products.json".
+2. Fetches CSV data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv".
+3. Fetches JSON data from "https://dummyjson.com/products?limit=100".
 4. Fetches post data from "https://jsonplaceholder.typicode.com/posts".
-5. Fetches employee records from "https://example.com/employees.csv".
-6. Fetches weather data from "https://example.com/weather.json".
-7. Fetches stock prices from "https://example.com/stocks.csv".
-8. Fetches order data from "https://example.com/orders.json".
+5. Fetches todo data from "https://jsonplaceholder.typicode.com/todos".
+6. Fetches comment data from "https://jsonplaceholder.typicode.com/comments".
+7. Fetches photo data from "https://jsonplaceholder.typicode.com/photos".
+8. Fetches album data from "https://jsonplaceholder.typicode.com/albums".
 
 ## Category 2: Filter (9–22)
 
-9. Filters rows where status equals "active" from data.
-10. Filters rows where age is greater than 30 from data.
-11. Filters rows where price is less than 50 from data.
-12. Filters rows where age is between 18 and 65 from data.
-13. Filters rows where name contains "smith" from data.
-14. Filters rows where email ends with ".com" from data.
-15. Filters rows where name starts with "J" from data.
-16. Filters rows where status is not equal to "inactive" from data.
-17. Filters rows where score is greater than or equal to 90 from data.
-18. Filters rows where quantity is less than or equal to 10 from data.
-19. Filters rows where department equals "engineering" and salary is greater than 100000 from data.
-20. Filters rows where player.goals is greater than 10 from data.
-21. Filters rows where rating is greater than 4 and category equals "electronics" from data.
-22. Filters rows where city equals "New York" from data.
+9. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and filters rows where completed equals true.
+10. Fetches users from "https://jsonplaceholder.typicode.com/users" and filters rows where address.city equals "Gwenborough".
+11. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and filters rows where price is less than 50.
+12. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and filters rows where sepal_length is greater than 5 and sepal_width is greater than 3.
+13. Fetches users from "https://jsonplaceholder.typicode.com/users" and filters rows where name contains "Leanne".
+14. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and filters rows where email ends with ".biz".
+15. Fetches users from "https://jsonplaceholder.typicode.com/users" and filters rows where name starts with "C".
+16. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and filters rows where completed is not equal to true.
+17. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and filters rows where rating is greater than or equal to 4.5.
+18. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and filters rows where stock is less than or equal to 10.
+19. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and filters rows where category equals "furniture" and price is greater than 30.
+20. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and filters rows where userId equals 1.
+21. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and filters rows where rating is greater than 4 and category equals "smartphones".
+22. Fetches users from "https://jsonplaceholder.typicode.com/users" and filters rows where address.city equals "South Elvis".
 
 ## Category 3: Select (23–32)
 
-23. Selects name and age fields from data.
-24. Selects name, email, and phone fields from data.
-25. Selects player.name and goals fields from data.
-26. Renames firstName to name from data.
-27. Selects address.city and address.state fields from data.
-28. Renames player.name to playerName and selects goals from data.
-29. Selects only the email field from data.
-30. Selects id, name, and status fields from data.
-31. Renames createdAt to date and selects amount from data.
-32. Selects department and salary fields from data.
+23. Fetches users from "https://jsonplaceholder.typicode.com/users" and selects name and email.
+24. Fetches users from "https://jsonplaceholder.typicode.com/users" and selects name, email, and phone.
+25. Fetches users from "https://jsonplaceholder.typicode.com/users" and selects company.name and name.
+26. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and renames title to name.
+27. Fetches users from "https://jsonplaceholder.typicode.com/users" and selects address.city and address.zipcode.
+28. Fetches users from "https://jsonplaceholder.typicode.com/users", renames company.name to companyName, and selects name.
+29. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and selects only the email field.
+30. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and selects id, title, and completed.
+31. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and renames userId to author and selects title.
+32. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and selects category and price.
 
 ## Category 4: Mutate (33–42)
 
-33. Adds a fullName field by concatenating first and last from data.
-34. Adds a total field by summing price and tax from data.
-35. Adds an area field by multiplying width and height from data.
-36. Adds a status field with the literal value "active" to each row in data.
-37. Adds a displayName field by concatenating first, a space, and last from data.
-38. Adds a subtotal field by multiplying price and quantity from data.
-39. Adds a label field by concatenating name, " (", department, and ")" from data.
-40. Adds a totalCost field by summing shipping and subtotal from data.
-41. Adds a bmi field by multiplying weight and heightFactor from data.
-42. Adds a greeting field by concatenating "Hello, " and name from data.
+33. Fetches users from "https://jsonplaceholder.typicode.com/users" and adds a label field by concatenating name, " <", and email, and ">".
+34. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and adds a salePrice field by multiplying price and discountPercentage.
+35. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a sepal_area field by multiplying sepal_length and sepal_width.
+36. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and adds a source field with the literal value "jsonplaceholder".
+37. Fetches users from "https://jsonplaceholder.typicode.com/users" and adds a contact field by concatenating name, " (", phone, and ")".
+38. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and adds a totalValue field by multiplying price and stock.
+39. Fetches users from "https://jsonplaceholder.typicode.com/users" and adds an info field by concatenating username, " - ", website.
+40. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a petal_area field by multiplying petal_length and petal_width.
+41. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a total_length field by summing sepal_length and petal_length.
+42. Fetches users from "https://jsonplaceholder.typicode.com/users" and adds a greeting field by concatenating "Hello, " and name.
 
 ## Category 5: Group (43–54)
 
-43. Groups by category and counts rows as n from data.
-44. Groups by department and computes average salary from data.
-45. Groups by department and counts rows as headcount and computes average salary from data.
-46. Groups by team and sums points as totalPoints from data.
-47. Groups by city and counts rows as population from data.
-48. Groups by category and computes min and max of price from data.
-49. Groups by status and counts rows as count from data.
-50. Groups by region and sums revenue from data.
-51. Groups by department and computes average age from data.
-52. Groups by country and counts rows as numCustomers from data.
-53. Groups by year and sums sales from data.
-54. Groups by product and computes average rating from data.
+43. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category counting rows as n.
+44. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average sepal_length.
+45. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species counting rows as count and computing average petal_length.
+46. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and groups by userId counting rows as postCount.
+47. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and groups by userId counting rows as totalTodos.
+48. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing min and max of sepal_length.
+49. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average rating.
+50. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing stock as totalStock.
+51. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average petal_width.
+52. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and groups by postId counting rows as commentCount.
+53. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing price as totalPrice.
+54. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average price.
 
 ## Category 6: Sort (55–62)
 
-55. Sorts by name ascending from data.
-56. Sorts by age descending from data.
-57. Sorts by price ascending from data.
-58. Sorts by score descending from data.
-59. Sorts by date ascending from data.
-60. Sorts by salary descending from data.
-61. Sorts by name from data.
-62. Sorts by total descending from data.
+55. Fetches users from "https://jsonplaceholder.typicode.com/users" and sorts by name ascending.
+56. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by price descending.
+57. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by sepal_length ascending.
+58. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by rating descending.
+59. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and sorts by title ascending.
+60. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by petal_length descending.
+61. Fetches users from "https://jsonplaceholder.typicode.com/users" and sorts by username.
+62. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by stock descending.
 
 ## Category 7: Take (63–68)
 
-63. Takes the first 10 items from data.
-64. Takes the first 5 items from data.
-65. Takes the last 3 items from data.
-66. Takes the first 20 items from data.
-67. Takes the last 10 items from data.
-68. Takes the first 1 item from data.
+63. Fetches photos from "https://jsonplaceholder.typicode.com/photos" and takes the first 10 items.
+64. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and takes the first 5 items.
+65. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and takes the last 3 items.
+66. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and takes the first 20 items.
+67. Fetches todos from "https://jsonplaceholder.typicode.com/todos" and takes the last 10 items.
+68. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, sorts by price descending, and takes the first 1 item.
 
 ## Category 8: Join (69–72)
 
-69. Joins data with departments on departmentId.
-70. Joins data with prices on productId.
-71. Joins data with addresses on userId.
-72. Joins data with categories on categoryId.
+69. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
+70. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and joins with posts fetched from "https://jsonplaceholder.typicode.com/posts" on postId matching id.
+71. Fetches photos from "https://jsonplaceholder.typicode.com/photos" and joins with albums fetched from "https://jsonplaceholder.typicode.com/albums" on albumId matching id.
+72. Fetches albums from "https://jsonplaceholder.typicode.com/albums" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
 
 ## Category 9: Get (73–78)
 
-73. Gets the "results" field from data.
-74. Gets the "address.city" field from data.
-75. Gets the "departments.teams.name" field from data.
-76. Gets the "data.items" field from data.
-77. Gets the "response.users" field from data.
-78. Gets the "stats.totals" field from data.
+73. Fetches products from "https://dummyjson.com/products?limit=100" and gets the "products" field.
+74. Fetches users from "https://jsonplaceholder.typicode.com/users" and gets the "address.city" field.
+75. Fetches users from "https://jsonplaceholder.typicode.com/users" and gets the "company.name" field.
+76. Fetches users from "https://jsonplaceholder.typicode.com/users" and gets the "address.geo" field.
+77. Fetches products from "https://dummyjson.com/products?limit=100" and gets the "products.title" field.
+78. Fetches users from "https://jsonplaceholder.typicode.com/users" and gets the "address" field.
 
 ## Category 10: Flatten (79–82)
 
-79. Flattens nested arrays to depth 1 from data.
-80. Flattens the "items" field from data.
-81. Flattens the "orders" field from data.
-82. Flattens nested arrays to depth 2 from data.
+79. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "tags" field.
+80. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "images" field.
+81. Fetches users from "https://jsonplaceholder.typicode.com/users" and flattens nested arrays to depth 1.
+82. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "reviews" field.
 
 ## Category 11: Unique (83–86)
 
-83. Deduplicates by email from data.
-84. Deduplicates by department and role from data.
-85. Deduplicates by name from data.
-86. Deduplicates by category and subcategory from data.
+83. Fetches comments from "https://jsonplaceholder.typicode.com/comments" and deduplicates by email.
+84. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category and brand.
+85. Fetches posts from "https://jsonplaceholder.typicode.com/posts" and deduplicates by userId.
+86. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category.
 
 ## Category 12: Pipelines (87–100)
 
-87. Fetches users from "https://jsonplaceholder.typicode.com/users" and selects name and email.
-88. Filters rows where age is greater than 30 and sorts by name from data.
-89. Filters rows where status equals "active", groups by department, and counts rows as headcount from data.
-90. Fetches data from "https://example.com/sales.csv", filters rows where amount is greater than 100, and sorts by amount descending.
-91. Selects name and score, sorts by score descending, and takes the first 5 from data.
-92. Filters rows where goals is greater than 10, selects player.name and goals, and sorts by goals descending from data.
-93. Groups by category and sums revenue, then sorts by revenue descending from data.
-94. Fetches products from "https://example.com/products.json", filters where price is less than 50, and selects name and price.
-95. Gets "results" from data, filters where score is greater than or equal to 80, and sorts by score descending.
-96. Filters where status equals "active", groups by region and counts as n, sorts by n descending, and takes the first 3 from data.
-97. Fetches employees from "https://example.com/employees.csv", adds a fullName field by concatenating first and last, and selects fullName and department.
-98. Filters where department equals "sales", groups by region and sums amount as totalSales, and sorts by totalSales descending from data.
-99. Gets "orders" from data, flattens the "items" field, selects name and price, and sorts by price descending.
-100. Deduplicates by email, filters where status is not equal to "inactive", selects name and email, and sorts by name from data.
+87. Fetches users from "https://jsonplaceholder.typicode.com/users", selects name and email, and sorts by name.
+88. Fetches todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, and sorts by title.
+89. Fetches todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, groups by userId, and counts rows as completedCount.
+90. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", filters where sepal_length is greater than 6, and sorts by sepal_length descending.
+91. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and rating, sorts by rating descending, and takes the first 5.
+92. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where price is greater than 100, selects title and price, and sorts by price descending.
+93. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category and sums price as totalPrice, and sorts by totalPrice descending.
+94. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where rating is greater than or equal to 4, and selects title and price.
+95. Fetches iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length, and sorts by sepal_length descending.
+96. Fetches todos from "https://jsonplaceholder.typicode.com/todos", groups by userId and counts as totalTodos, sorts by totalTodos descending, and takes the first 3.
+97. Fetches users from "https://jsonplaceholder.typicode.com/users", adds a label field by concatenating name, " <", email, and ">", and selects label and phone.
+98. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category computing average rating, sorts by rating descending, and takes the first 5.
+99. Fetches products from "https://dummyjson.com/products?limit=100", gets the "products" field, flattens the "tags" field, deduplicates by tags, and sorts by tags.
+100. Fetches comments from "https://jsonplaceholder.typicode.com/comments", deduplicates by email, selects name and email, and sorts by email.
