@@ -371,11 +371,12 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const data = Array.isArray(v1) ? v1 : [];
+        const takeSpec = typeof v0 === 'object' ? toPlainObject(v0) : v0;
         let result;
-        if (typeof v0 === 'number') {
-          result = data.slice(0, v0);
-        } else if (typeof v0 === 'object' && v0.last) {
-          result = data.slice(-v0.last);
+        if (typeof takeSpec === 'number') {
+          result = data.slice(0, takeSpec);
+        } else if (typeof takeSpec === 'object' && takeSpec.last) {
+          result = data.slice(-takeSpec.last);
         } else {
           result = data;
         }
