@@ -107,7 +107,7 @@ function toDecimal(val) {
 }
 
 function roundDecimal(d, dp) {
-  return dp !== undefined ? d.toDecimalPlaces(dp).toNumber() : d.toNumber();
+  return dp !== undefined ? d.toFixed(dp) : d.toNumber();
 }
 
 // --- Checker ---
