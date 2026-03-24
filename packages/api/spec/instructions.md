@@ -9,6 +9,7 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
 - Use `get` to navigate into nested data: `get "results.items" data`
 - Use `filter` to keep matching rows with predicate records: `filter {age: {gt: 30}} data`
   - Comparison operators: `eq`, `ne`, `gt`, `ge`, `lt`, `le`
+  - List operators: `in` (value in list), `nin` (value not in list)
   - String operators: `contains`, `startsWith`, `endsWith`
   - Equality shorthand: `filter {status: "active"} data`
   - Dot-paths for nested fields use quoted strings as record keys: `filter {"address.city": {eq: "Springfield"}} data` (not nested records)
@@ -30,6 +31,8 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
 
 ## Example Patterns
 
+- Filter with list: `filter {category: {in: ["books" "music"]}} data..`
+- Exclude by list: `filter {code: {nin: ["WLD" "OED" "PST"]}} data..`
 - Fetch and filter: `filter {age: {gt: 30}} fetch "https://example.com/people.json"..`
 - Navigate and select: `select ["name", "email"] get "users" fetch "https://example.com/api.json"..`
 - Group and sort: `sort {field: "n", order: "desc"} group {by: "category", count: "n"} data..`

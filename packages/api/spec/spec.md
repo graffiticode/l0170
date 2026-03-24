@@ -54,6 +54,8 @@ equality matching, or a record of comparison operators.
 | `contains` | String contains | `{name: {contains: "smith"}}` |
 | `startsWith` | String starts with | `{name: {startsWith: "J"}}` |
 | `endsWith` | String ends with | `{email: {endsWith: ".com"}}` |
+| `in` | Value is in list | `{status: {in: ["active", "pending"]}}` |
+| `nin` | Value is not in list | `{code: {nin: ["WLD", "OED", "PST"]}}` |
 
 Multiple operators can be combined in a single condition. Multiple keys require
 all conditions to match (logical AND).
@@ -64,6 +66,8 @@ filter {age: {gt: 30}} data
 filter {age: {ge: 18, lt: 65}} data
 filter {name: {contains: "smith"}} data
 filter {player.goals: {gt: 10}} data
+filter {status: {in: ["active" "pending"]}} data
+filter {code: {nin: ["WLD" "OED" "PST"]}} data
 ```
 
 ### select

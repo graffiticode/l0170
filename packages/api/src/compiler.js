@@ -63,6 +63,12 @@ function matchesPredicate(row, predicate) {
           case 'endsWith':
             if (!String(value).endsWith(String(target))) return false;
             break;
+          case 'in':
+            if (!Array.isArray(target) || !target.some(t => value == t)) return false;
+            break;
+          case 'nin':
+            if (Array.isArray(target) && target.some(t => value == t)) return false;
+            break;
           default:
             break;
         }
