@@ -11,6 +11,22 @@ const getData = bent('string');
 
 // --- Helpers ---
 
+function toPlainObject(val) {
+  if (val !== null && typeof val === 'object' && val._type === 'record' && val._entries instanceof Map) {
+    const obj = {};
+    for (const [k, v] of val._entries) {
+      // Keys are encoded as "tag:name" or "str:name"
+      const name = k.replace(/^(tag|str|num):/, '');
+      obj[name] = toPlainObject(v);
+    }
+    return obj;
+  }
+  if (Array.isArray(val)) {
+    return val.map(toPlainObject);
+  }
+  return val;
+}
+
 function matchesPredicate(row, predicate) {
   for (const key of Object.keys(predicate)) {
     const condition = predicate[key];
@@ -199,7 +215,7 @@ export class Transformer extends BasisTransformer {
   FILTER(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const predicate = v0;
+        const predicate = toPlainObject(v0);
         const data = Array.isArray(v1) ? v1 : [];
         const result = data.filter(row => matchesPredicate(row, predicate));
         resume([].concat(e0).concat(e1), result);
@@ -210,7 +226,7 @@ export class Transformer extends BasisTransformer {
   SELECT(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const fields = Array.isArray(v0) ? v0 : [v0];
+        const fields = Array.isArray(v0) ? v0.map(toPlainObject) : [toPlainObject(v0)];
         const data = Array.isArray(v1) ? v1 : [];
         const result = data.map(row => {
           const out = {};
@@ -234,7 +250,7 @@ export class Transformer extends BasisTransformer {
   MUTATE(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const spec = v0;
+        const spec = toPlainObject(v0);
         const data = Array.isArray(v1) ? v1 : [];
         const result = data.map(row => {
           const out = { ...row };
@@ -266,7 +282,7 @@ export class Transformer extends BasisTransformer {
   GROUP(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const spec = v0;
+        const spec = toPlainObject(v0);
         const data = Array.isArray(v1) ? v1 : [];
         const byField = spec.by;
         // Group rows
@@ -331,8 +347,9 @@ export class Transformer extends BasisTransformer {
           field = v0;
           order = 'asc';
         } else {
-          field = v0.field;
-          order = v0.order || 'asc';
+          const sortSpec = toPlainObject(v0);
+          field = sortSpec.field;
+          order = sortSpec.order || 'asc';
         }
         data.sort((a, b) => {
           const av = a[field];
@@ -370,7 +387,7 @@ export class Transformer extends BasisTransformer {
   JOIN(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const spec = v0;
+        const spec = toPlainObject(v0);
         const left = Array.isArray(v1) ? v1 : [];
         const right = Array.isArray(spec.right) ? spec.right : [];
         const onField = spec.on;
