@@ -5,6 +5,7 @@ import {
   Compiler as BasisCompiler
 } from '@graffiticode/basis';
 import bent from 'bent';
+import Decimal from 'decimal.js';
 import Papa from 'papaparse';
 
 const getData = bent('string');
@@ -95,6 +96,14 @@ function resolveValue(row, val) {
     return row[val];
   }
   return val;
+}
+
+function toDecimal(val) {
+  try {
+    return new Decimal(val);
+  } catch (e) {
+    return new Decimal(0);
+  }
 }
 
 // --- Checker ---
@@ -260,11 +269,11 @@ export class Transformer extends BasisTransformer {
               if (expr.concat) {
                 out[key] = expr.concat.map(part => resolveValue(row, part)).join('');
               } else if (expr.add) {
-                const vals = expr.add.map(part => Number(resolveValue(row, part)));
-                out[key] = vals.reduce((a, b) => a + b, 0);
+                const vals = expr.add.map(part => toDecimal(resolveValue(row, part)));
+                out[key] = vals.reduce((a, b) => a.plus(b), new Decimal(0)).toNumber();
               } else if (expr.mul) {
-                const vals = expr.mul.map(part => Number(resolveValue(row, part)));
-                out[key] = vals.reduce((a, b) => a * b, 1);
+                const vals = expr.mul.map(part => toDecimal(resolveValue(row, part)));
+                out[key] = vals.reduce((a, b) => a.times(b), new Decimal(1)).toNumber();
               } else {
                 out[key] = expr;
               }
@@ -318,16 +327,16 @@ export class Transformer extends BasisTransformer {
                 out[typeof aggSpec === 'string' ? aggSpec : alias] = rows.length;
                 break;
               case 'sum':
-                out[alias] = rows.reduce((acc, r) => acc + Number(r[field] || 0), 0);
+                out[alias] = rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).toNumber();
                 break;
               case 'avg':
-                out[alias] = rows.reduce((acc, r) => acc + Number(r[field] || 0), 0) / rows.length;
+                out[alias] = rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).dividedBy(rows.length).toNumber();
                 break;
               case 'min':
-                out[alias] = Math.min(...rows.map(r => Number(r[field])));
+                out[alias] = rows.reduce((acc, r) => Decimal.min(acc, toDecimal(r[field])), new Decimal(Infinity)).toNumber();
                 break;
               case 'max':
-                out[alias] = Math.max(...rows.map(r => Number(r[field])));
+                out[alias] = rows.reduce((acc, r) => Decimal.max(acc, toDecimal(r[field])), new Decimal(-Infinity)).toNumber();
                 break;
             }
           }
