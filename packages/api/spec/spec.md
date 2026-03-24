@@ -102,14 +102,21 @@ each key is the output field name and each value is an expression.
 | `"literal"` | Literal string (if no matching field) | `{status: "active"}` |
 | `{concat: [...]}` | Concatenate strings/fields | `{full: {concat: ["first", " ", "last"]}}` |
 | `{add: [...]}` | Sum numeric fields/values | `{total: {add: ["price", "tax"]}}` |
+| `{add: [...], dp: N}` | Sum, rounded to N decimal places | `{total: {add: ["price", "tax"], dp: 2}}` |
 | `{mul: [...]}` | Multiply numeric fields/values | `{area: {mul: ["width", "height"]}}` |
+| `{mul: [...], dp: N}` | Multiply, rounded to N decimal places | `{pct: {mul: ["rate", 100], dp: 1}}` |
 
 In `concat`, `add`, and `mul` arrays, strings that match a field name in the
 row are resolved to that field's value; otherwise they are used as literals.
 
+The optional `dp` key rounds the result to the specified number of decimal
+places using half-up rounding (e.g., `dp: 2` gives two decimal places).
+All arithmetic uses precise decimal math internally.
+
 ```
 mutate {fullName: {concat: ["first", " ", "last"]}} data
 mutate {total: {add: ["price", "tax"]}} data
+mutate {total: {add: ["price", "tax"], dp: 2}} data
 mutate {status: "active"} data
 ```
 
@@ -124,18 +131,21 @@ record with a required `by` key and one or more aggregation keys.
 | :-- | :---- | :---------- |
 | `by` | `"field"` | Field to group by (required) |
 | `count` | `"outputName"` | Count of rows in each group |
-| `sum` | `"field"` or `{field: "x", as: "y"}` | Sum of field values |
-| `avg` | `"field"` or `{field: "x", as: "y"}` | Average of field values |
-| `min` | `"field"` or `{field: "x", as: "y"}` | Minimum field value |
-| `max` | `"field"` or `{field: "x", as: "y"}` | Maximum field value |
+| `sum` | `"field"` or `{field: "x", as: "y", dp: N}` | Sum of field values |
+| `avg` | `"field"` or `{field: "x", as: "y", dp: N}` | Average of field values |
+| `min` | `"field"` or `{field: "x", as: "y", dp: N}` | Minimum field value |
+| `max` | `"field"` or `{field: "x", as: "y", dp: N}` | Maximum field value |
 
 For `sum`, `avg`, `min`, `max`: a string value uses the field name as both
 input and output. A record with `field` and `as` allows renaming the output.
+The optional `dp` key rounds the result to the specified number of decimal
+places.
 
 ```
 group {by: "category", count: "n"} data
 group {by: "dept", sum: "salary", avg: "age"} data
 group {by: "team", sum: {field: "points", as: "totalPoints"}} data
+group {by: "dept", avg: {field: "salary", as: "avgSalary", dp: 2}} data
 ```
 
 ### sort

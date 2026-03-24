@@ -17,8 +17,10 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
   - Rename with records: `select [{from: "firstName", to: "name"}] data`
 - Use `mutate` to compute new fields: `mutate {total: {add: ["price", "tax"]}} data`
   - Expressions: `concat`, `add`, `mul`
+  - Round with `dp`: `mutate {total: {add: ["price", "tax"], dp: 2}} data`
 - Use `group` to aggregate: `group {by: "category", count: "n"} data`
   - Aggregations: `count`, `sum`, `avg`, `min`, `max`
+  - Round with `dp`: `group {by: "dept", avg: {field: "salary", as: "avgSalary", dp: 2}} data`
 - Use `sort` to order results: `sort "name" data` or `sort {field: "age", order: "desc"} data`
 - Use `take` to limit results: `take 10 data` or `take {last: 5} data`
 - Use `join` to combine datasets: `join {right: other, on: "id"} data`

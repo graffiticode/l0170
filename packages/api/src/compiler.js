@@ -106,6 +106,10 @@ function toDecimal(val) {
   }
 }
 
+function roundDecimal(d, dp) {
+  return dp !== undefined ? d.toDecimalPlaces(dp).toNumber() : d.toNumber();
+}
+
 // --- Checker ---
 
 export class Checker extends BasisChecker {
@@ -270,10 +274,10 @@ export class Transformer extends BasisTransformer {
                 out[key] = expr.concat.map(part => resolveValue(row, part)).join('');
               } else if (expr.add) {
                 const vals = expr.add.map(part => toDecimal(resolveValue(row, part)));
-                out[key] = vals.reduce((a, b) => a.plus(b), new Decimal(0)).toNumber();
+                out[key] = roundDecimal(vals.reduce((a, b) => a.plus(b), new Decimal(0)), expr.dp);
               } else if (expr.mul) {
                 const vals = expr.mul.map(part => toDecimal(resolveValue(row, part)));
-                out[key] = vals.reduce((a, b) => a.times(b), new Decimal(1)).toNumber();
+                out[key] = roundDecimal(vals.reduce((a, b) => a.times(b), new Decimal(1)), expr.dp);
               } else {
                 out[key] = expr;
               }
@@ -311,14 +315,15 @@ export class Transformer extends BasisTransformer {
           for (const aggKey of Object.keys(spec)) {
             if (aggKey === 'by') continue;
             const aggSpec = spec[aggKey];
-            // aggSpec is either "fieldName" or {field: "x", as: "y"}
-            let field, alias;
+            // aggSpec is either "fieldName" or {field: "x", as: "y", dp: N}
+            let field, alias, dp;
             if (typeof aggSpec === 'string') {
               field = aggSpec;
               alias = aggSpec;
             } else if (typeof aggSpec === 'object' && aggSpec.field) {
               field = aggSpec.field;
               alias = aggSpec.as || field;
+              dp = aggSpec.dp;
             } else {
               continue;
             }
@@ -327,16 +332,16 @@ export class Transformer extends BasisTransformer {
                 out[typeof aggSpec === 'string' ? aggSpec : alias] = rows.length;
                 break;
               case 'sum':
-                out[alias] = rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).toNumber();
+                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)), dp);
                 break;
               case 'avg':
-                out[alias] = rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).dividedBy(rows.length).toNumber();
+                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).dividedBy(rows.length), dp);
                 break;
               case 'min':
-                out[alias] = rows.reduce((acc, r) => Decimal.min(acc, toDecimal(r[field])), new Decimal(Infinity)).toNumber();
+                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.min(acc, toDecimal(r[field])), new Decimal(Infinity)), dp);
                 break;
               case 'max':
-                out[alias] = rows.reduce((acc, r) => Decimal.max(acc, toDecimal(r[field])), new Decimal(-Infinity)).toNumber();
+                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.max(acc, toDecimal(r[field])), new Decimal(-Infinity)), dp);
                 break;
             }
           }
