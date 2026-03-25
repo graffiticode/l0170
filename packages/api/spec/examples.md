@@ -112,10 +112,10 @@
 
 ## Category 10: Flatten (81–84)
 
-81. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "tags" field.
-82. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "images" field.
-83. Fetch users from "https://jsonplaceholder.typicode.com/users" and flattens nested arrays to depth 1.
-84. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "reviews" field.
+81. Given data with rows containing a "tags" array field (e.g., [{name: "A", tags: ["x", "y"]}, {name: "B", tags: ["z"]}]), flatten the "tags" field to produce one row per tag.
+82. Given data with rows containing an "items" array of records (e.g., [{order: 1, items: [{sku: "A1", qty: 2}, {sku: "B3", qty: 1}]}, {order: 2, items: [{sku: "A1", qty: 5}]}]), flatten the "items" field to produce one row per item.
+83. Given data with rows containing a "scores" array of numbers (e.g., [{student: "Alice", scores: [90, 85, 92]}, {student: "Bob", scores: [78, 88]}]), flatten the "scores" field to produce one row per score.
+84. Given data with rows containing a "colors" array field (e.g., [{product: "shirt", colors: ["red", "blue"]}, {product: "hat", colors: ["black"]}]), flatten the "colors" field and then deduplicate by colors.
 
 ## Category 11: Unique (85–88)
 
