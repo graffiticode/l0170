@@ -28,6 +28,11 @@ function toPlainObject(val) {
   return val;
 }
 
+function toPlainData(val) {
+  const plain = toPlainObject(val);
+  return Array.isArray(plain) ? plain : [];
+}
+
 function matchesPredicate(row, predicate) {
   for (const key of Object.keys(predicate)) {
     const condition = predicate[key];
@@ -235,7 +240,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const predicate = toPlainObject(v0);
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const result = data.filter(row => matchesPredicate(row, predicate));
         resume([].concat(e0).concat(e1), result);
       });
@@ -246,7 +251,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const fields = Array.isArray(v0) ? v0.map(toPlainObject) : [toPlainObject(v0)];
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const result = data.map(row => {
           const out = {};
           for (const field of fields) {
@@ -270,7 +275,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const spec = toPlainObject(v0);
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const result = data.map(row => {
           const out = { ...row };
           for (const key of Object.keys(spec)) {
@@ -302,7 +307,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const spec = toPlainObject(v0);
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const byField = spec.by;
         // Group rows
         const groups = {};
@@ -390,7 +395,7 @@ export class Transformer extends BasisTransformer {
   TAKE(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const takeSpec = typeof v0 === 'object' ? toPlainObject(v0) : v0;
         let result;
         if (typeof takeSpec === 'number') {
@@ -409,7 +414,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const spec = toPlainObject(v0);
-        const left = Array.isArray(v1) ? v1 : [];
+        const left = toPlainData(v1);
         const right = Array.isArray(spec.right) ? spec.right : [];
         const onField = spec.on;
         // Index right side by key
@@ -441,14 +446,14 @@ export class Transformer extends BasisTransformer {
   FLATTEN(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         let result;
         if (typeof v0 === 'number') {
           // Flatten nested arrays to depth
           result = data.flat(v0);
-        } else if (typeof v0 === 'string') {
+        } else {
           // Flatten by extracting nested array at path
-          const path = v0;
+          const path = String(v0);
           result = [];
           for (const row of data) {
             const nested = row[path];
@@ -466,8 +471,6 @@ export class Transformer extends BasisTransformer {
               result.push(row);
             }
           }
-        } else {
-          result = data;
         }
         resume([].concat(e0).concat(e1), result);
       });
@@ -488,7 +491,7 @@ export class Transformer extends BasisTransformer {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         const fields = Array.isArray(v0) ? v0 : [v0];
-        const data = Array.isArray(v1) ? v1 : [];
+        const data = toPlainData(v1);
         const seen = new Set();
         const result = [];
         for (const row of data) {
