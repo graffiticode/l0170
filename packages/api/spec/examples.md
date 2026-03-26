@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # L0170 RAG Training Examples
 
-116 example prompts for training a RAG model on the L0170 data transformation language.
+117 example prompts for training a RAG model on the L0170 data transformation language.
 
 ## Category 1: Fetch (1–8)
 
@@ -145,7 +145,7 @@
 105. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, flattens the "tags" field, deduplicates by tags, and sorts by tags.
 106. Fetch comments from "https://jsonplaceholder.typicode.com/comments", deduplicates by email, selects name and email, and sorts by email.
 
-## Category 13: Format (107–116)
+## Category 13: Format (107–117)
 
 107. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats price as "$#,##0.00".
 108. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, adds a salePrice field by multiplying price and discountPercentage rounded to 2, and formats salePrice as "$#,##0.00".
@@ -157,3 +157,4 @@
 114. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and price, formats price as "$#,##0", and sorts by title.
 115. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length rounded to 2, and formats sepal_length as "0.00".
 116. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title, price, and rating, formats price as "$#,##0.00" and rating as "0.0", and takes the first 10.
+117. Fetch earthquake data from "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=20", gets the "features" field, selects "properties.place", "properties.mag", and "properties.time", and formats time as "yyyy-mm-dd hh:mm".
