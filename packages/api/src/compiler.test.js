@@ -81,3 +81,72 @@ describe("filter with in/nin", () => {
     ]);
   });
 });
+
+describe("mutate with round", () => {
+  test("round returns a number, not a string", async () => {
+    const result = await compile(
+      'mutate {total: {add: ["a" "b"], round: 2}} [{a: 1.005, b: 2.005}]..'
+    );
+    expect(result.result).toEqual([{ a: 1.005, b: 2.005, total: 3.01 }]);
+    expect(typeof result.result[0].total).toBe("number");
+  });
+
+  test("round with mul returns a number", async () => {
+    const result = await compile(
+      'mutate {pct: {mul: ["rate" 100], round: 1}} [{rate: 0.125}]..'
+    );
+    expect(result.result).toEqual([{ rate: 0.125, pct: 12.5 }]);
+    expect(typeof result.result[0].pct).toBe("number");
+  });
+});
+
+describe("format", () => {
+  test("formats number with thousands separator", async () => {
+    const result = await compile(
+      'format {val: "#,##0"} [{val: 1234}]..'
+    );
+    expect(result.result).toEqual([{ val: "1,234" }]);
+  });
+
+  test("formats number as currency", async () => {
+    const result = await compile(
+      'format {price: "$#,##0.00"} [{price: 1234.5}]..'
+    );
+    expect(result.result).toEqual([{ price: "$1,234.50" }]);
+  });
+
+  test("formats number as percentage", async () => {
+    const result = await compile(
+      'format {rate: "0.0%"} [{rate: 0.125}]..'
+    );
+    expect(result.result).toEqual([{ rate: "12.5%" }]);
+  });
+
+  test("formats number with zero padding", async () => {
+    const result = await compile(
+      'format {id: "000000"} [{id: 42}]..'
+    );
+    expect(result.result).toEqual([{ id: "000042" }]);
+  });
+
+  test("leaves non-numeric fields unchanged", async () => {
+    const result = await compile(
+      'format {name: "#,##0"} [{name: "Alice", val: 100}]..'
+    );
+    expect(result.result).toEqual([{ name: "Alice", val: 100 }]);
+  });
+
+  test("formats multiple fields", async () => {
+    const result = await compile(
+      'format {price: "$#,##0.00", qty: "#,##0"} [{price: 9.99, qty: 1500}]..'
+    );
+    expect(result.result).toEqual([{ price: "$9.99", qty: "1,500" }]);
+  });
+
+  test("formats negative with accounting parens", async () => {
+    const result = await compile(
+      'format {amount: "#,##0.00;(#,##0.00)"} [{amount: -1234}]..'
+    );
+    expect(result.result).toEqual([{ amount: "(1,234.00)" }]);
+  });
+});

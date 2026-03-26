@@ -18,15 +18,19 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
   - Rename with records: `select [{from: "firstName", to: "name"}] data`
 - Use `mutate` to compute new fields: `mutate {total: {add: ["price", "tax"]}} data`
   - Expressions: `concat`, `add`, `mul`
-  - Round with `dp`: `mutate {total: {add: ["price", "tax"], dp: 2}} data`
+  - Round with `round`: `mutate {total: {add: ["price", "tax"], round: 2}} data`
 - Use `group` to aggregate: `group {by: "category", count: "n"} data`
   - Aggregations: `count`, `sum`, `avg`, `min`, `max`
-  - Round with `dp`: `group {by: "dept", avg: {field: "salary", as: "avgSalary", dp: 2}} data`
+  - Round with `round`: `group {by: "dept", avg: {field: "salary", as: "avgSalary", round: 2}} data`
 - Use `sort` to order results: `sort "name" data` or `sort {field: "age", order: "desc"} data`
 - Use `take` to limit results: `take 10 data` or `take {last: 5} data`
 - Use `join` to combine datasets: `join {right: other, on: "id"} data`
 - Use `flatten` to unnest: `flatten 1 data` or `flatten "items" data`
 - Use `unique` to deduplicate: `unique "email" data` or `unique ["dept", "role"] data`
+- Use `format` to display numbers as formatted strings with Excel-style patterns: `format {price: "$#,##0.00", rate: "0.0%"} data`
+  - Common patterns: `"#,##0"` (thousands), `"$#,##0.00"` (currency), `"0.0%"` (percent), `"000000"` (zero-padded)
+  - Accounting: `"#,##0.00;(#,##0.00)"` (negative in parens)
+  - Date: `"yyyy-mm-dd"`, `"mm/dd/yyyy"`
 - Compose operations right-to-left to build data pipelines
 
 ## Example Patterns

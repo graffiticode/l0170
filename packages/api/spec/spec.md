@@ -24,6 +24,7 @@ semantics and base library can be found here:
 | `get` | `<string record: any>` | Navigates into nested data by dot-path |
 | `flatten` | `<number|string list: list>` | Flattens nested arrays or extracts nested fields |
 | `unique` | `<string|list list: list>` | Deduplicates by field(s) |
+| `format` | `<record list: list>` | Formats numeric fields as display strings |
 
 ### fetch
 
@@ -106,21 +107,21 @@ each key is the output field name and each value is an expression.
 | `"literal"` | Literal string (if no matching field) | `{status: "active"}` |
 | `{concat: [...]}` | Concatenate strings/fields | `{full: {concat: ["first", " ", "last"]}}` |
 | `{add: [...]}` | Sum numeric fields/values | `{total: {add: ["price", "tax"]}}` |
-| `{add: [...], dp: N}` | Sum, rounded to N decimal places | `{total: {add: ["price", "tax"], dp: 2}}` |
+| `{add: [...], round: N}` | Sum, rounded to N decimal places | `{total: {add: ["price", "tax"], round: 2}}` |
 | `{mul: [...]}` | Multiply numeric fields/values | `{area: {mul: ["width", "height"]}}` |
-| `{mul: [...], dp: N}` | Multiply, rounded to N decimal places | `{pct: {mul: ["rate", 100], dp: 1}}` |
+| `{mul: [...], round: N}` | Multiply, rounded to N decimal places | `{pct: {mul: ["rate", 100], round: 1}}` |
 
 In `concat`, `add`, and `mul` arrays, strings that match a field name in the
 row are resolved to that field's value; otherwise they are used as literals.
 
-The optional `dp` key rounds the result to the specified number of decimal
-places using half-up rounding (e.g., `dp: 2` gives two decimal places).
-All arithmetic uses precise decimal math internally.
+The optional `round` key rounds the result to the specified number of decimal
+places using half-up rounding (e.g., `round: 2` gives two decimal places).
+The result remains a number. All arithmetic uses precise decimal math internally.
 
 ```
 mutate {fullName: {concat: ["first", " ", "last"]}} data
 mutate {total: {add: ["price", "tax"]}} data
-mutate {total: {add: ["price", "tax"], dp: 2}} data
+mutate {total: {add: ["price", "tax"], round: 2}} data
 mutate {status: "active"} data
 ```
 
@@ -135,21 +136,21 @@ record with a required `by` key and one or more aggregation keys.
 | :-- | :---- | :---------- |
 | `by` | `"field"` | Field to group by (required) |
 | `count` | `"outputName"` | Count of rows in each group |
-| `sum` | `"field"` or `{field: "x", as: "y", dp: N}` | Sum of field values |
-| `avg` | `"field"` or `{field: "x", as: "y", dp: N}` | Average of field values |
-| `min` | `"field"` or `{field: "x", as: "y", dp: N}` | Minimum field value |
-| `max` | `"field"` or `{field: "x", as: "y", dp: N}` | Maximum field value |
+| `sum` | `"field"` or `{field: "x", as: "y", round: N}` | Sum of field values |
+| `avg` | `"field"` or `{field: "x", as: "y", round: N}` | Average of field values |
+| `min` | `"field"` or `{field: "x", as: "y", round: N}` | Minimum field value |
+| `max` | `"field"` or `{field: "x", as: "y", round: N}` | Maximum field value |
 
 For `sum`, `avg`, `min`, `max`: a string value uses the field name as both
 input and output. A record with `field` and `as` allows renaming the output.
-The optional `dp` key rounds the result to the specified number of decimal
-places.
+The optional `round` key rounds the result to the specified number of decimal
+places. The result remains a number.
 
 ```
 group {by: "category", count: "n"} data
 group {by: "dept", sum: "salary", avg: "age"} data
 group {by: "team", sum: {field: "points", as: "totalPoints"}} data
-group {by: "dept", avg: {field: "salary", as: "avgSalary", dp: 2}} data
+group {by: "dept", avg: {field: "salary", as: "avgSalary", round: 2}} data
 ```
 
 ### sort
@@ -254,6 +255,30 @@ each unique key is kept.
 ```
 unique "email" data
 unique ["dept", "role"] data
+```
+
+### format
+
+Formats numeric fields as display strings using Excel-style format patterns
+(ECMA-376). The first argument is a record where each key is a field name and
+each value is a format pattern string. Non-numeric fields are left unchanged.
+
+**Common format patterns:**
+
+| Pattern | Description | Example input | Example output |
+| :------ | :---------- | :------------ | :------------- |
+| `"#,##0"` | Thousands separator | `1234` | `"1,234"` |
+| `"#,##0.00"` | Two decimals with grouping | `1234.5` | `"1,234.50"` |
+| `"$#,##0.00"` | Currency | `1234.5` | `"$1,234.50"` |
+| `"0.0%"` | Percentage (multiplies by 100) | `0.125` | `"12.5%"` |
+| `"000000"` | Zero-padded | `42` | `"000042"` |
+| `"#,##0.00;(#,##0.00)"` | Accounting (negative in parens) | `-1234` | `"(1,234.00)"` |
+| `"yyyy-mm-dd"` | Date | date serial | `"2024-03-15"` |
+
+```
+format {price: "$#,##0.00"} data
+format {rate: "0.0%"} data
+format {price: "$#,##0.00", qty: "#,##0"} data
 ```
 
 ## Program Examples

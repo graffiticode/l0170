@@ -10,5 +10,6 @@ export const lexicon = {
   "join":    { "tk": 1, "name": "JOIN",    "cls": "function", "length": 2, "arity": 2 },
   "get":     { "tk": 1, "name": "GET",     "cls": "function", "length": 2, "arity": 2 },
   "flatten": { "tk": 1, "name": "FLATTEN", "cls": "function", "length": 2, "arity": 2 },
-  "unique":  { "tk": 1, "name": "UNIQUE",  "cls": "function", "length": 2, "arity": 2 }
+  "unique":  { "tk": 1, "name": "UNIQUE",  "cls": "function", "length": 2, "arity": 2 },
+  "format":  { "tk": 1, "name": "FORMAT",  "cls": "function", "length": 2, "arity": 2 }
 }

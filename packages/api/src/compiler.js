@@ -6,6 +6,7 @@ import {
 } from '@graffiticode/basis';
 import bent from 'bent';
 import Decimal from 'decimal.js';
+import { format as numfmtFormat } from 'numfmt';
 import Papa from 'papaparse';
 
 const getData = bent('string');
@@ -117,8 +118,8 @@ function toDecimal(val) {
   }
 }
 
-function roundDecimal(d, dp) {
-  return dp !== undefined ? d.toFixed(dp) : d.toNumber();
+function roundDecimal(d, round) {
+  return round !== undefined ? d.toDecimalPlaces(round).toNumber() : d.toNumber();
 }
 
 // --- Checker ---
@@ -193,6 +194,13 @@ export class Checker extends BasisChecker {
     });
   }
   UNIQUE(node, options, resume) {
+    this.visit(node.elts[0], options, (e0, v0) => {
+      this.visit(node.elts[1], options, (e1, v1) => {
+        resume([], node);
+      });
+    });
+  }
+  FORMAT(node, options, resume) {
     this.visit(node.elts[0], options, (e0, v0) => {
       this.visit(node.elts[1], options, (e1, v1) => {
         resume([], node);
@@ -285,10 +293,10 @@ export class Transformer extends BasisTransformer {
                 out[key] = expr.concat.map(part => resolveValue(row, part)).join('');
               } else if (expr.add) {
                 const vals = expr.add.map(part => toDecimal(resolveValue(row, part)));
-                out[key] = roundDecimal(vals.reduce((a, b) => a.plus(b), new Decimal(0)), expr.dp);
+                out[key] = roundDecimal(vals.reduce((a, b) => a.plus(b), new Decimal(0)), expr.round);
               } else if (expr.mul) {
                 const vals = expr.mul.map(part => toDecimal(resolveValue(row, part)));
-                out[key] = roundDecimal(vals.reduce((a, b) => a.times(b), new Decimal(1)), expr.dp);
+                out[key] = roundDecimal(vals.reduce((a, b) => a.times(b), new Decimal(1)), expr.round);
               } else {
                 out[key] = expr;
               }
@@ -326,15 +334,15 @@ export class Transformer extends BasisTransformer {
           for (const aggKey of Object.keys(spec)) {
             if (aggKey === 'by') continue;
             const aggSpec = spec[aggKey];
-            // aggSpec is either "fieldName" or {field: "x", as: "y", dp: N}
-            let field, alias, dp;
+            // aggSpec is either "fieldName" or {field: "x", as: "y", round: N}
+            let field, alias, round;
             if (typeof aggSpec === 'string') {
               field = aggSpec;
               alias = aggSpec;
             } else if (typeof aggSpec === 'object' && aggSpec.field) {
               field = aggSpec.field;
               alias = aggSpec.as || field;
-              dp = aggSpec.dp;
+              round = aggSpec.round;
             } else {
               continue;
             }
@@ -343,16 +351,16 @@ export class Transformer extends BasisTransformer {
                 out[typeof aggSpec === 'string' ? aggSpec : alias] = rows.length;
                 break;
               case 'sum':
-                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)), dp);
+                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)), round);
                 break;
               case 'avg':
-                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).dividedBy(rows.length), dp);
+                out[alias] = roundDecimal(rows.reduce((acc, r) => acc.plus(toDecimal(r[field])), new Decimal(0)).dividedBy(rows.length), round);
                 break;
               case 'min':
-                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.min(acc, toDecimal(r[field])), new Decimal(Infinity)), dp);
+                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.min(acc, toDecimal(r[field])), new Decimal(Infinity)), round);
                 break;
               case 'max':
-                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.max(acc, toDecimal(r[field])), new Decimal(-Infinity)), dp);
+                out[alias] = roundDecimal(rows.reduce((acc, r) => Decimal.max(acc, toDecimal(r[field])), new Decimal(-Infinity)), round);
                 break;
             }
           }
@@ -501,6 +509,28 @@ export class Transformer extends BasisTransformer {
             result.push(row);
           }
         }
+        resume([].concat(e0).concat(e1), result);
+      });
+    });
+  }
+
+  FORMAT(node, options, resume) {
+    this.visit(node.elts[0], options, (e0, v0) => {
+      this.visit(node.elts[1], options, (e1, v1) => {
+        const spec = toPlainObject(v0);
+        const data = toPlainData(v1);
+        const result = data.map(row => {
+          const out = { ...row };
+          for (const [field, pattern] of Object.entries(spec)) {
+            if (field in out && out[field] != null) {
+              const val = typeof out[field] === 'string' ? Number(out[field]) : out[field];
+              if (!isNaN(val)) {
+                out[field] = numfmtFormat(pattern, val);
+              }
+            }
+          }
+          return out;
+        });
         resume([].concat(e0).concat(e1), result);
       });
     });
