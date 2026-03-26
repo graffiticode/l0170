@@ -6,7 +6,7 @@ import {
 } from '@graffiticode/basis';
 import bent from 'bent';
 import Decimal from 'decimal.js';
-import { format as numfmtFormat } from 'numfmt';
+import { format as numfmtFormat, isDateFormat, dateToSerial } from 'numfmt';
 import Papa from 'papaparse';
 
 const getData = bent('string');
@@ -529,8 +529,12 @@ export class Transformer extends BasisTransformer {
           const out = { ...row };
           for (const [field, pattern] of Object.entries(spec)) {
             if (field in out && out[field] != null) {
-              const val = typeof out[field] === 'string' ? Number(out[field]) : out[field];
+              let val = typeof out[field] === 'string' ? Number(out[field]) : out[field];
               if (!isNaN(val)) {
+                if (isDateFormat(pattern) && val > 86400000) {
+                  // Convert Unix millisecond timestamp to Excel serial date
+                  val = dateToSerial(new Date(val));
+                }
                 out[field] = numfmtFormat(pattern, val);
               }
             }

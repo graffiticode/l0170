@@ -165,4 +165,12 @@ describe("format", () => {
     );
     expect(result.result).toEqual([{ amount: "(1,234.00)" }]);
   });
+
+  test("formats unix millisecond timestamp as date", async () => {
+    // 1709294400000 = 2024-03-01T12:00:00.000Z
+    const result = await compile(
+      'format {time: "yyyy-mm-dd"} [{time: 1709294400000}]..'
+    );
+    expect(result.result).toEqual([{ time: "2024-03-01" }]);
+  });
 });
