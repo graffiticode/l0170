@@ -17,7 +17,7 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
   - Dot-paths for nested fields: `select ["player.name", "goals"] data`
   - Rename with records: `select [{from: "firstName", to: "name"}] data`
 - Use `mutate` to compute new fields: `mutate {total: {add: ["price", "tax"]}} data`
-  - Expressions: `concat`, `add`, `mul`
+  - Expressions: `concat`, `add`, `sub`, `mul`, `div`
   - Round with `round`: `mutate {total: {add: ["price", "tax"], round: 2}} data`
 - Use `group` to aggregate: `group {by: "category", count: "n"} data`
   - Aggregations: `count`, `sum`, `avg`, `min`, `max`

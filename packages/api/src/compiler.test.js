@@ -98,6 +98,22 @@ describe("mutate with round", () => {
     expect(result.result).toEqual([{ rate: 0.125, pct: 12.5 }]);
     expect(typeof result.result[0].pct).toBe("number");
   });
+
+  test("sub subtracts values", async () => {
+    const result = await compile(
+      'mutate {profit: {sub: ["revenue" "cost"], round: 2}} [{revenue: 100.50, cost: 42.25}]..'
+    );
+    expect(result.result).toEqual([{ revenue: 100.50, cost: 42.25, profit: 58.25 }]);
+    expect(typeof result.result[0].profit).toBe("number");
+  });
+
+  test("div divides values", async () => {
+    const result = await compile(
+      'mutate {avg: {div: ["total" "count"], round: 2}} [{total: 100, count: 3}]..'
+    );
+    expect(result.result).toEqual([{ total: 100, count: 3, avg: 33.33 }]);
+    expect(typeof result.result[0].avg).toBe("number");
+  });
 });
 
 describe("format", () => {

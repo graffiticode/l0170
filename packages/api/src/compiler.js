@@ -294,9 +294,15 @@ export class Transformer extends BasisTransformer {
               } else if (expr.add) {
                 const vals = expr.add.map(part => toDecimal(resolveValue(row, part)));
                 out[key] = roundDecimal(vals.reduce((a, b) => a.plus(b), new Decimal(0)), expr.round);
+              } else if (expr.sub) {
+                const vals = expr.sub.map(part => toDecimal(resolveValue(row, part)));
+                out[key] = roundDecimal(vals.slice(1).reduce((a, b) => a.minus(b), vals[0]), expr.round);
               } else if (expr.mul) {
                 const vals = expr.mul.map(part => toDecimal(resolveValue(row, part)));
                 out[key] = roundDecimal(vals.reduce((a, b) => a.times(b), new Decimal(1)), expr.round);
+              } else if (expr.div) {
+                const vals = expr.div.map(part => toDecimal(resolveValue(row, part)));
+                out[key] = roundDecimal(vals.slice(1).reduce((a, b) => a.dividedBy(b), vals[0]), expr.round);
               } else {
                 out[key] = expr;
               }

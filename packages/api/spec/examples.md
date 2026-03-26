@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # L0170 RAG Training Examples
 
-112 example prompts for training a RAG model on the L0170 data transformation language.
+116 example prompts for training a RAG model on the L0170 data transformation language.
 
 ## Category 1: Fetch (1–8)
 
@@ -46,7 +46,7 @@
 33. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and renames userId to author and selects title.
 34. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and selects category and price.
 
-## Category 4: Mutate (35–44)
+## Category 4: Mutate (35–48)
 
 35. Fetch users from "https://jsonplaceholder.typicode.com/users" and adds a label field by concatenating name, " <", and email, and ">".
 36. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and adds a salePrice field by multiplying price and discountPercentage, rounded to 2.
@@ -58,98 +58,102 @@
 42. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a petal_area field by multiplying petal_length and petal_width.
 43. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a total_length field by summing sepal_length and petal_length, rounded to 1.
 44. Fetch users from "https://jsonplaceholder.typicode.com/users" and adds a greeting field by concatenating "Hello, " and name.
+45. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and adds a discount field by subtracting price and salePrice, rounded to 2.
+46. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and adds a pricePerUnit field by dividing price and stock, rounded to 2.
+47. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a sepal_ratio field by dividing sepal_length and sepal_width, rounded to 2.
+48. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and adds a length_diff field by subtracting sepal_length and petal_length, rounded to 2.
 
-## Category 5: Group (45–56)
+## Category 5: Group (49–60)
 
-45. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category counting rows as n.
-46. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average sepal_length rounded to 2.
-47. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species counting rows as count and computing average petal_length.
-48. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and groups by userId counting rows as postCount.
-49. Fetch todos from "https://jsonplaceholder.typicode.com/todos" and groups by userId counting rows as totalTodos.
-50. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing min and max of sepal_length.
-51. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average rating rounded to 1.
-52. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing stock as totalStock.
-53. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average petal_width.
-54. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and groups by postId counting rows as commentCount.
-55. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing price as totalPrice.
-56. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average price rounded to 2.
+49. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category counting rows as n.
+50. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average sepal_length rounded to 2.
+51. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species counting rows as count and computing average petal_length.
+52. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and groups by userId counting rows as postCount.
+53. Fetch todos from "https://jsonplaceholder.typicode.com/todos" and groups by userId counting rows as totalTodos.
+54. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing min and max of sepal_length.
+55. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average rating rounded to 1.
+56. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing stock as totalStock.
+57. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and groups by species computing average petal_width.
+58. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and groups by postId counting rows as commentCount.
+59. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category summing price as totalPrice.
+60. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and groups by category computing average price rounded to 2.
 
-## Category 6: Sort (57–64)
+## Category 6: Sort (61–68)
 
-57. Fetch users from "https://jsonplaceholder.typicode.com/users" and sorts by name ascending.
-58. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by price descending.
-59. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by sepal_length ascending.
-60. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by rating descending.
-61. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and sorts by title ascending.
-62. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by petal_length descending.
-63. Fetch users from "https://jsonplaceholder.typicode.com/users" and sorts by username.
-64. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by stock descending.
+61. Fetch users from "https://jsonplaceholder.typicode.com/users" and sorts by name ascending.
+62. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by price descending.
+63. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by sepal_length ascending.
+64. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by rating descending.
+65. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and sorts by title ascending.
+66. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" and sorts by petal_length descending.
+67. Fetch users from "https://jsonplaceholder.typicode.com/users" and sorts by username.
+68. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and sorts by stock descending.
 
-## Category 7: Take (65–70)
+## Category 7: Take (69–74)
 
-65. Fetch photos from "https://jsonplaceholder.typicode.com/photos" and takes the first 10 items.
-66. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and takes the first 5 items.
-67. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and takes the last 3 items.
-68. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and takes the first 20 items.
-69. Fetch todos from "https://jsonplaceholder.typicode.com/todos" and takes the last 10 items.
-70. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, sorts by price descending, and takes the first 1 item.
+69. Fetch photos from "https://jsonplaceholder.typicode.com/photos" and takes the first 10 items.
+70. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and takes the first 5 items.
+71. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and takes the last 3 items.
+72. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and takes the first 20 items.
+73. Fetch todos from "https://jsonplaceholder.typicode.com/todos" and takes the last 10 items.
+74. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, sorts by price descending, and takes the first 1 item.
 
-## Category 8: Join (71–74)
+## Category 8: Join (75–78)
 
-71. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
-72. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and joins with posts fetched from "https://jsonplaceholder.typicode.com/posts" on postId matching id.
-73. Fetch photos from "https://jsonplaceholder.typicode.com/photos" and joins with albums fetched from "https://jsonplaceholder.typicode.com/albums" on albumId matching id.
-74. Fetch albums from "https://jsonplaceholder.typicode.com/albums" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
+75. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
+76. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and joins with posts fetched from "https://jsonplaceholder.typicode.com/posts" on postId matching id.
+77. Fetch photos from "https://jsonplaceholder.typicode.com/photos" and joins with albums fetched from "https://jsonplaceholder.typicode.com/albums" on albumId matching id.
+78. Fetch albums from "https://jsonplaceholder.typicode.com/albums" and joins with users fetched from "https://jsonplaceholder.typicode.com/users" on userId matching id.
 
-## Category 9: Get (75–80)
+## Category 9: Get (79–84)
 
-75. Fetch products from "https://dummyjson.com/products?limit=100" and gets the "products" field.
-76. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address.city" field.
-77. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "company.name" field.
-78. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address.geo" field.
-79. Fetch products from "https://dummyjson.com/products?limit=100" and gets the "products.title" field.
-80. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address" field.
+79. Fetch products from "https://dummyjson.com/products?limit=100" and gets the "products" field.
+80. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address.city" field.
+81. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "company.name" field.
+82. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address.geo" field.
+83. Fetch products from "https://dummyjson.com/products?limit=100" and gets the "products.title" field.
+84. Fetch users from "https://jsonplaceholder.typicode.com/users" and gets the "address" field.
 
-## Category 10: Flatten (81–84)
+## Category 10: Flatten (85–88)
 
-81. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "tags" field.
-82. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "images" field.
-83. Fetch users from "https://jsonplaceholder.typicode.com/users" and flattens nested arrays to depth 1.
-84. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "reviews" field.
+85. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "tags" field.
+86. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "images" field.
+87. Fetch users from "https://jsonplaceholder.typicode.com/users" and flattens nested arrays to depth 1.
+88. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and flattens the "reviews" field.
 
-## Category 11: Unique (85–88)
+## Category 11: Unique (89–92)
 
-85. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and deduplicates by email.
-86. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category and brand.
-87. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and deduplicates by userId.
-88. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category.
+89. Fetch comments from "https://jsonplaceholder.typicode.com/comments" and deduplicates by email.
+90. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category and brand.
+91. Fetch posts from "https://jsonplaceholder.typicode.com/posts" and deduplicates by userId.
+92. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and deduplicates by category.
 
-## Category 12: Pipelines (89–102)
+## Category 12: Pipelines (93–106)
 
-89. Fetch users from "https://jsonplaceholder.typicode.com/users", selects name and email, and sorts by name.
-90. Fetch todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, and sorts by title.
-91. Fetch todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, groups by userId, and counts rows as completedCount.
-92. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", filters where sepal_length is greater than 6, and sorts by sepal_length descending.
-93. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and rating, sorts by rating descending, and takes the first 5.
-94. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where price is greater than 100, selects title and price, and sorts by price descending.
-95. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category and sums price as totalPrice rounded to 2, and sorts by totalPrice descending.
-96. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where rating is greater than or equal to 4, and selects title and price.
-97. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length rounded to 2, and sorts by sepal_length descending.
-98. Fetch todos from "https://jsonplaceholder.typicode.com/todos", groups by userId and counts as totalTodos, sorts by totalTodos descending, and takes the first 3.
-99. Fetch users from "https://jsonplaceholder.typicode.com/users", adds a label field by concatenating name, " <", email, and ">", and selects label and phone.
-100. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category computing average rating rounded to 1, sorts by rating descending, and takes the first 5.
-101. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, flattens the "tags" field, deduplicates by tags, and sorts by tags.
-102. Fetch comments from "https://jsonplaceholder.typicode.com/comments", deduplicates by email, selects name and email, and sorts by email.
+93. Fetch users from "https://jsonplaceholder.typicode.com/users", selects name and email, and sorts by name.
+94. Fetch todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, and sorts by title.
+95. Fetch todos from "https://jsonplaceholder.typicode.com/todos", filters where completed equals true, groups by userId, and counts rows as completedCount.
+96. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", filters where sepal_length is greater than 6, and sorts by sepal_length descending.
+97. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and rating, sorts by rating descending, and takes the first 5.
+98. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where price is greater than 100, selects title and price, and sorts by price descending.
+99. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category and sums price as totalPrice rounded to 2, and sorts by totalPrice descending.
+100. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, filters where rating is greater than or equal to 4, and selects title and price.
+101. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length rounded to 2, and sorts by sepal_length descending.
+102. Fetch todos from "https://jsonplaceholder.typicode.com/todos", groups by userId and counts as totalTodos, sorts by totalTodos descending, and takes the first 3.
+103. Fetch users from "https://jsonplaceholder.typicode.com/users", adds a label field by concatenating name, " <", email, and ">", and selects label and phone.
+104. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category computing average rating rounded to 1, sorts by rating descending, and takes the first 5.
+105. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, flattens the "tags" field, deduplicates by tags, and sorts by tags.
+106. Fetch comments from "https://jsonplaceholder.typicode.com/comments", deduplicates by email, selects name and email, and sorts by email.
 
-## Category 13: Format (103–112)
+## Category 13: Format (107–116)
 
-103. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats price as "$#,##0.00".
-104. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, adds a salePrice field by multiplying price and discountPercentage rounded to 2, and formats salePrice as "$#,##0.00".
-105. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats stock as "#,##0".
-106. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", adds a sepal_area field by multiplying sepal_length and sepal_width rounded to 2, and formats sepal_area as "0.00".
-107. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, mutates discountRate by dividing discountPercentage by 100, and formats discountRate as "0.0%".
-108. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category and sums price as totalPrice rounded to 2, sorts by totalPrice descending, and formats totalPrice as "$#,##0.00".
-109. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats price as "#,##0.00;(#,##0.00)".
-110. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and price, formats price as "$#,##0", and sorts by title.
-111. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length rounded to 2, and formats sepal_length as "0.00".
-112. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title, price, and rating, formats price as "$#,##0.00" and rating as "0.0", and takes the first 10.
+107. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats price as "$#,##0.00".
+108. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, adds a salePrice field by multiplying price and discountPercentage rounded to 2, and formats salePrice as "$#,##0.00".
+109. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats stock as "#,##0".
+110. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", adds a sepal_area field by multiplying sepal_length and sepal_width rounded to 2, and formats sepal_area as "0.00".
+111. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, mutates discountRate by dividing discountPercentage by 100, and formats discountRate as "0.0%".
+112. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, groups by category and sums price as totalPrice rounded to 2, sorts by totalPrice descending, and formats totalPrice as "$#,##0.00".
+113. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, and formats price as "#,##0.00;(#,##0.00)".
+114. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title and price, formats price as "$#,##0", and sorts by title.
+115. Fetch iris data from "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", groups by species and computes average sepal_length rounded to 2, and formats sepal_length as "0.00".
+116. Fetch products from "https://dummyjson.com/products?limit=100", gets the "products" field, selects title, price, and rating, formats price as "$#,##0.00" and rating as "0.0", and takes the first 10.

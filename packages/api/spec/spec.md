@@ -108,11 +108,17 @@ each key is the output field name and each value is an expression.
 | `{concat: [...]}` | Concatenate strings/fields | `{full: {concat: ["first", " ", "last"]}}` |
 | `{add: [...]}` | Sum numeric fields/values | `{total: {add: ["price", "tax"]}}` |
 | `{add: [...], round: N}` | Sum, rounded to N decimal places | `{total: {add: ["price", "tax"], round: 2}}` |
+| `{sub: [...]}` | Subtract numeric fields/values | `{profit: {sub: ["revenue", "cost"]}}` |
+| `{sub: [...], round: N}` | Subtract, rounded to N decimal places | `{diff: {sub: ["a", "b"], round: 2}}` |
 | `{mul: [...]}` | Multiply numeric fields/values | `{area: {mul: ["width", "height"]}}` |
 | `{mul: [...], round: N}` | Multiply, rounded to N decimal places | `{pct: {mul: ["rate", 100], round: 1}}` |
+| `{div: [...]}` | Divide numeric fields/values | `{avg: {div: ["total", "count"]}}` |
+| `{div: [...], round: N}` | Divide, rounded to N decimal places | `{rate: {div: ["hits", "attempts"], round: 4}}` |
 
-In `concat`, `add`, and `mul` arrays, strings that match a field name in the
-row are resolved to that field's value; otherwise they are used as literals.
+In `concat`, `add`, `sub`, `mul`, and `div` arrays, strings that match a field
+name in the row are resolved to that field's value; otherwise they are used as
+literals. For `sub` and `div`, the first element is the starting value and
+subsequent elements are subtracted or divided in order.
 
 The optional `round` key rounds the result to the specified number of decimal
 places using half-up rounding (e.g., `round: 2` gives two decimal places).
