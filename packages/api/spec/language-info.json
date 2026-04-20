@@ -1,0 +1,39 @@
+{
+  "id": "0170",
+  "description": "Authors data transformation pipelines from natural language, inspired by dplyr and jq. Fetches JSON or CSV from URLs (or accepts inline data), then composes a pipeline of operations — filter, select, mutate, group, sort, take, join, flatten, unique, format — to produce the result. Describe the source, the transformations in order, and the final shape — L0170 emits a program that executes the pipeline and returns the transformed data.",
+  "supported_item_types": [
+    "data_pipeline"
+  ],
+  "example_prompts": [
+    {
+      "prompt": "Fetch https://example.com/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name.",
+      "produces": "data_pipeline",
+      "notes": "Names the URL, the predicate (greater than 30), the projection, and the sort order — no ambiguity about the pipeline shape or the final field set."
+    },
+    {
+      "prompt": "Group this data by department, count the rows, and compute the average salary rounded to 2 decimals. Sort by count descending. Take the top 5 departments.",
+      "produces": "data_pipeline",
+      "notes": "Specifies two aggregations (count and average-with-round), the sort direction, and the row limit — exercises the full group/sort/take triad in one request."
+    },
+    {
+      "prompt": "Fetch https://example.com/orders.csv and join it with https://example.com/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100.",
+      "produces": "data_pipeline",
+      "notes": "Names both fetch URLs, the join key, the final projection, and the post-join filter — the canonical two-source join pipeline."
+    },
+    {
+      "prompt": "Filter the data to rows whose category is in ['books', 'music'] and whose price is less than 50. Add a tax column as price * 0.08. Format price and tax as currency.",
+      "produces": "data_pipeline",
+      "notes": "Uses the `in` list predicate and a comparison predicate together, adds a mutated column with arithmetic, and applies Excel-style currency formatting — covers filter / mutate / format in one go."
+    },
+    {
+      "prompt": "Fetch https://example.com/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId.",
+      "produces": "data_pipeline",
+      "notes": "Drills into nested data with a dot-path, unnests a nested array, and deduplicates — covers get / flatten / unique for hierarchical input."
+    },
+    {
+      "prompt": "Filter rows whose name starts with 'J' and whose address.city equals 'Springfield'. Select name, address.city, and address.zip (rename the nested fields to city and zip). Sort by name.",
+      "produces": "data_pipeline",
+      "notes": "Uses the startsWith string predicate, a dot-path predicate on a nested field, and renames in select — covers the nested-field authoring surface explicitly."
+    }
+  ]
+}
