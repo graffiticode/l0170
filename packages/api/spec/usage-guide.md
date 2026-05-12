@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-# L0170 User Guide
+# L0170 Usage Guide
 
 Agent-facing guide for authoring data transformation pipelines through L0170. Read this before composing a `create_item` prompt or an `update_item` modification.
 
