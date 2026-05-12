@@ -1,105 +1,49 @@
-# L0170 Usage Guide
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+# L0170 User Guide
 
-Welcome to the L0170 language guide. L0170 is a Graffiticode language designed for creating and manipulating basic expressions, lists, and functional programming constructs. You can access and use L0170 through the Graffiticode MCP tool or console, where you can describe your desired operations in natural language, and the system will generate the corresponding Graffiticode.
+Agent-facing guide for authoring data transformation pipelines through L0170. Read this before composing a `create_item` prompt or an `update_item` modification.
 
-## What You Can Create with L0170
+## Overview
 
-### Basic Expressions and Literals
+L0170 is an authoring language for data transformation pipelines, inspired by dplyr and jq. Input is a natural-language description of a transformation; output is an L0170 program that fetches or receives tabular data (JSON, CSV, or inline records) and composes a pipeline of operations — filter, select, mutate, group, sort, take, join, flatten, unique, format — to produce the result. L0170 is the right tool when the job is "reshape this data" or "compute this summary"; it is not a chart renderer, a full programming language, or a persistent-storage interface.
 
-L0170 allows you to perform arithmetic operations and handle basic data types such as numbers and strings. You can create expressions that add, subtract, multiply, and manipulate numbers or strings.
+When composing a request, describe the source first (URL to fetch, path to navigate into, or inline data), then the transformations in the order they should apply, then the final shape (which fields to keep, how to order, how many rows, what format). Pipelines read right-to-left in L0170 source, but requests can be authored left-to-right in plain English — the translator reverses them when emitting code. Be explicit about field names and comparison conditions because the predicate syntax is precise (e.g., `{age: {gt: 30}}` rather than "over 30"); stating "keep rows where age is greater than 30" is enough.
 
-Example Requests:
-- "Add 7 and 5."
-- "Multiply 6 by 4."
-- "Return the number 42."
-- "Return the string 'hello'."
+In scope: fetching remote JSON or CSV, navigating nested records with dot-paths, filtering by equality / comparison / list membership / string match, selecting and renaming fields, computing derived fields, grouping with aggregations (count/sum/avg/min/max), sorting and limiting, joining two datasets on a key, flattening nested arrays, deduplicating, and number/date formatting for display. Out of scope: charting and visualization, user-interactive assessments, mutation of remote data (all operations are read-only transforms), stateful workflows, database queries (only URL fetches), and host-app embedding — those belong in other Graffiticode languages or downstream runtimes.
 
-**Capabilities**: L0170 can perform basic arithmetic operations and return simple data types.  
-**Limitations**: It cannot handle complex data structures or perform operations beyond basic arithmetic.
+## Vocabulary Cues
 
-### Lists
+Say this to get that:
 
-L0170 supports operations on lists, including creating lists, accessing elements, and modifying lists.
+- **Fetch** — `fetch "URL"`. Retrieves JSON or CSV from a URL. Auto-detects format. "Get the data from https://..." or "fetch the JSON at ..." triggers this.
+- **Get / navigate** — `get "path.to.data" data`. Navigates into a nested record with dot-paths. "Navigate into results.items" or "drill into the users field".
+- **Filter** — `filter {field: {operator: value}} data`. Keeps rows matching a predicate. Operators: `eq`, `ne`, `gt`, `ge`, `lt`, `le`, `in`, `nin`, `contains`, `startsWith`, `endsWith`. "Keep rows where X is greater than Y" / "only rows whose name contains 'smith'" / "exclude rows whose code is in [WLD, OED]".
+- **Select** — `select ["field1", "field2"]` or with renames `select [{from: "firstName", to: "name"}]`. "Pick only the name and age" or "rename firstName to name".
+- **Mutate** — `mutate {total: {add: ["price", "tax"]}}`. Computes new fields. Expressions: `add`, `sub`, `mul`, `div`, `concat`. Round with `round: N`. "Add a total column that is price plus tax" / "compute fullName as firstName + ' ' + lastName".
+- **Group / aggregate** — `group {by: "category", count: "n"}` or `group {by: "dept", avg: {field: "salary", as: "avgSalary"}}`. Aggregations: `count`, `sum`, `avg`, `min`, `max`. "Group by category and count" / "average salary by department".
+- **Sort** — `sort "name"` (ascending) or `sort {field: "age", order: "desc"}`. "Sort by score descending".
+- **Take** — `take 10` (first N) or `take {last: 5}`. "Top 5" / "last 3 rows".
+- **Join** — `join {right: other, on: "id"} data`. Left join two arrays by key. "Join orders with customers on customerId".
+- **Flatten** — `flatten 1 data` (one level) or `flatten "items" data` (extract nested field). "Flatten the items array" / "unnest one level of nesting".
+- **Unique** — `unique "email"` or `unique ["dept", "role"]`. "Deduplicate by email" / "unique combinations of department and role".
+- **Format** — `format {price: "$#,##0.00", rate: "0.0%"}`. Excel-style patterns for currency, percent, thousands, dates (`yyyy-mm-dd`). "Display price as currency" / "format rate as a percentage".
+- **Dot-path** — for nested fields, use `"parent.child"` strings as record keys in predicates and select lists. "Filter on address.city equals Springfield".
+- **Pipeline order** — describe operations left-to-right in English ("fetch, then filter, then sort, then take top 5"); the backend emits composed L0170 source.
 
-Example Requests:
-- "Return the list `[1, 2, 3]`."
-- "Return the first element of `[5, 6, 7]`."
-- "Append `[4, 5]` to `[1, 2, 3]`."
-- "Create a list of numbers from 1 to 5 using `range`."
+## Example Prompts
 
-**Capabilities**: You can create lists, access elements, and perform basic list operations like appending and slicing.  
-**Limitations**: It does not support complex list manipulations or nested list operations.
+- *"Fetch https://example.com/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name."* → `data_pipeline`
+- *"Group this data by department, count the rows, and compute the average salary rounded to 2 decimals. Sort by count descending. Take the top 5 departments."* → `data_pipeline`
+- *"Fetch https://example.com/orders.csv and join it with https://example.com/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100."* → `data_pipeline`
+- *"Filter the data to rows whose category is in ['books', 'music'] and whose price is less than 50. Add a tax column as price * 0.08. Format price and tax as currency."* → `data_pipeline`
+- *"Fetch https://example.com/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId."* → `data_pipeline`
+- *"Filter rows whose name starts with 'J' and whose address.city equals 'Springfield'. Select name, address.city, and address.zip (rename the nested fields to city and zip). Sort by name."* → `data_pipeline`
 
-### Map, Filter, and Reduce
+## Out of Scope
 
-L0170 provides functional programming capabilities to map, filter, and reduce lists.
-
-Example Requests:
-- "Double every number in `[1, 2, 3, 4]`."
-- "Keep only the even numbers in `[1, 2, 3, 4, 5, 6]`."
-- "Sum all numbers in `[1, 2, 3, 4]`."
-- "Filter out negative numbers from `[3, -1, 4, -2, 5]`."
-
-**Capabilities**: You can apply transformations to lists, filter elements based on conditions, and aggregate list values.  
-**Limitations**: It cannot perform complex transformations that require external data or state.
-
-### Lambdas and Higher-Order Functions
-
-You can define and use functions, including lambdas, to perform operations on data.
-
-Example Requests:
-- "Define a function `double` that multiplies a number by 2."
-- "Map a lambda that squares numbers over `[2, 3, 4]`."
-- "Reduce `[1, 2, 3, 4]` using addition."
-- "Define a function `triple` and map it over `[1, 2, 3]`."
-
-**Capabilities**: L0170 supports defining simple functions and using them in higher-order functions like map and reduce.  
-**Limitations**: It does not support complex function definitions or stateful operations.
-
-### Pattern Matching
-
-L0170 includes pattern matching capabilities to handle different data structures and conditions.
-
-Example Requests:
-- "Match the number 1 and return 'one'."
-- "Match a list and return the head."
-- "Match a pair `(x, y)` and return their sum."
-- "Match a record `{name, age}` and format a string."
-
-**Capabilities**: You can match patterns in data and perform operations based on the match.  
-**Limitations**: It does not support advanced pattern matching with nested structures or complex conditions.
-
-### Mixed Programs
-
-Combine various operations to create more complex programs that utilize multiple capabilities of L0170.
-
-Example Requests:
-- "Double numbers in `[1, 2, 3, 4]` and then sum them."
-- "Square numbers from 1 to 10 and filter even results."
-- "Add the elements of a pair `(3, 7)`."
-- "Find the largest number in `[3, 9, 2, 7]`."
-
-**Capabilities**: You can create programs that combine multiple operations for more complex data processing.  
-**Limitations**: It cannot handle highly complex logic or operations requiring external data sources.
-
-## Iterating and Refining
-
-L0170 allows you to refine your requests by iterating on previous operations. You can update elements of your program to adjust the output or behavior.
-
-Example Requests:
-- "Update the list to include more elements."
-- "Refine the function to handle additional cases."
-- "Adjust the filter condition to exclude more values."
-
-**Capabilities**: You can make incremental changes to your programs to refine their behavior.  
-**Limitations**: It does not support dynamic updates that require re-evaluation of complex logic.
-
-## Cross-References to Other Graffiticode Languages
-
-For tasks that L0170 cannot perform, consider using other Graffiticode languages:
-
-- **L0003**: For advanced data processing and complex data structures.
-- **L0004**: For graphical and visual data representation.
-- **L0005**: For integration with external data sources and APIs.
-
-This guide provides an overview of what you can achieve with L0170. Use the examples as a starting point to explore the capabilities of the language through the Graffiticode MCP tool or console.
+- **Charting and visualization** — bar charts, line graphs, heatmaps. L0170 produces transformed data; a visualization language consumes it.
+- **Writing back to the source** — no mutations of remote data, no POST/PUT. All fetch operations are read-only.
+- **Database queries** — SQL, GraphQL, NoSQL. L0170 fetches JSON/CSV over HTTP only.
+- **Interactive assessments or forms** — L0170 is a transformation language, not an interaction surface.
+- **Complex conditional logic across rows** — no window functions, no lag/lead, no row-referential formulas. Use `group` for aggregations; use `mutate` for per-row computed fields.
+- **Host-app embedding and UI** — L0170 emits a program that compiles to a data result; rendering belongs to the consumer.
