@@ -9,6 +9,7 @@
     "Working with inline literal record arrays"
   ],
   "out_of_scope": [
+    "Anything that isn't a data transformation (charts/visualizations, storage layers, query engines, ETL orchestration, real-time stream processing, ML training)",
     "Charting and visualization (bar, line, heatmap) — produces transformed data, doesn't render it",
     "Writing back to the source (POST/PUT, mutating remote data)",
     "Database queries (SQL, GraphQL, NoSQL) — HTTP JSON/CSV only",
