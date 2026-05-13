@@ -1,0 +1,19 @@
+{
+  "id": "0170",
+  "summary": "Authors data transformation pipelines, inspired by dplyr and jq — fetches tabular data (JSON, CSV, inline records) and composes filter / select / mutate / group / sort / join / flatten / unique / format operations.",
+  "in_scope": [
+    "Fetching JSON or CSV over HTTP (read-only)",
+    "Filter, select, mutate, group, sort, take, join, flatten, unique, format operations",
+    "Per-row computed fields via mutate",
+    "Aggregations via group",
+    "Working with inline literal record arrays"
+  ],
+  "out_of_scope": [
+    "Charting and visualization (bar, line, heatmap) — produces transformed data, doesn't render it",
+    "Writing back to the source (POST/PUT, mutating remote data)",
+    "Database queries (SQL, GraphQL, NoSQL) — HTTP JSON/CSV only",
+    "Interactive assessments or forms — transformation only, not an interaction surface",
+    "Window functions / lag / lead / row-referential formulas across rows",
+    "Host-app embedding or UI rendering — emit data, consumer renders"
+  ]
+}
