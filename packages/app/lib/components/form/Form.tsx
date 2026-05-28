@@ -40,8 +40,8 @@ export const Form = ({ state }) => {
         "rounded-md font-mono flex flex-col gap-4 p-4"
       )}
     >
-      {Array.isArray(state.data.errors) && state.data.errors.length > 0
-        ? renderErrors(state.data.errors)
+      {Array.isArray(state.errors) && state.errors.length > 0
+        ? renderErrors(state.errors)
         : render({state})}
     </div>
   );
