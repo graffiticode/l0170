@@ -1,6 +1,6 @@
 {
   "id": "0170",
-  "description": "Authors data transformation pipelines from natural language, inspired by dplyr and jq. Fetches JSON or CSV from URLs (or accepts inline data), then composes a pipeline of operations — filter, select, mutate, group, sort, take, join, flatten, unique, format — to produce the result. Describe the source, the transformations in order, and the final shape — L0170 emits a program that executes the pipeline and returns the transformed data.",
+  "description": "Fetches and transforms data from natural language, inspired by dplyr and jq. Fetches JSON or CSV from external/public web URLs (or accepts inline data), then composes a pipeline of operations — filter, select, mutate, group, sort, take, join, flatten, unique, format — to produce the result. Describe the source, the transformations in order, and the final shape — L0170 emits a program that executes the pipeline and returns the transformed data.",
   "supported_item_types": [
     "data_pipeline"
   ],
