@@ -4,12 +4,21 @@ import {
   Transformer as BasisTransformer,
   Compiler as BasisCompiler
 } from '@graffiticode/basis';
-import bent from 'bent';
 import Decimal from 'decimal.js';
 import { format as numfmtFormat, isDateFormat, dateToSerial } from 'numfmt';
 import Papa from 'papaparse';
 
-const getData = bent('string');
+// Fetch the URL body as text. Uses the platform fetch (Node 18+), which follows
+// 3xx redirects by default — bent did not, so sources that 301 (e.g.
+// restcountries.com/v3.1/all now redirects to a static legacy.json) failed with
+// "Moved Permanently".
+const getData = async (url) => {
+  const res = await fetch(url, { redirect: 'follow' });
+  if (!res.ok) {
+    throw new Error(`${res.status} ${res.statusText}`);
+  }
+  return await res.text();
+};
 
 // --- Helpers ---
 
