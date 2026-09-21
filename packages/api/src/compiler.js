@@ -230,7 +230,7 @@ export class Transformer extends BasisTransformer {
         const tryCSVFirst = url.endsWith('.csv');
         try {
           if (tryCSVFirst) {
-            obj = Papa.parse(text, { header: true, dynamicTyping: true }).data;
+            obj = Papa.parse(text, { header: true, dynamicTyping: true, skipEmptyLines: 'greedy' }).data;
           } else {
             obj = JSON.parse(text);
           }
@@ -239,7 +239,7 @@ export class Transformer extends BasisTransformer {
             if (tryCSVFirst) {
               obj = JSON.parse(text);
             } else {
-              obj = Papa.parse(text, { header: true, dynamicTyping: true }).data;
+              obj = Papa.parse(text, { header: true, dynamicTyping: true, skipEmptyLines: 'greedy' }).data;
             }
           } catch (x2) {
             resume([{ message: `Failed to parse data from ${url}` }], []);

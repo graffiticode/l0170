@@ -32,11 +32,11 @@ Say this to get that:
 
 ## Example Prompts
 
-- *"Fetch https://example.com/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name."* → `data_pipeline`
+- *"Fetch https://l0170.graffiticode.org/data/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name."* → `data_pipeline`
 - *"Group this data by department, count the rows, and compute the average salary rounded to 2 decimals. Sort by count descending. Take the top 5 departments."* → `data_pipeline`
-- *"Fetch https://example.com/orders.csv and join it with https://example.com/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100."* → `data_pipeline`
+- *"Fetch https://l0170.graffiticode.org/data/orders.csv and join it with https://l0170.graffiticode.org/data/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100."* → `data_pipeline`
 - *"Filter the data to rows whose category is in ['books', 'music'] and whose price is less than 50. Add a tax column as price * 0.08. Format price and tax as currency."* → `data_pipeline`
-- *"Fetch https://example.com/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId."* → `data_pipeline`
+- *"Fetch https://l0170.graffiticode.org/data/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId."* → `data_pipeline`
 - *"Filter rows whose name starts with 'J' and whose address.city equals 'Springfield'. Select name, address.city, and address.zip (rename the nested fields to city and zip). Sort by name."* → `data_pipeline`
 
 ## Out of Scope

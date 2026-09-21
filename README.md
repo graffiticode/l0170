@@ -27,10 +27,10 @@ Additional operations from basis: `map`, `apply`, `val`, `key`, `len`, `concat`,
 
 ```
 | Fetch JSON data
-fetch "https://jsonplaceholder.typicode.com/users"
+fetch "https://l0170.graffiticode.org/data/users.json"
 
 | Navigate into nested data
-get "results.items" fetch "https://example.com/api.json"
+get "results.items" fetch "https://l0170.graffiticode.org/data/api.json"
 
 | Filter with comparison operators (eq, ne, gt, ge, lt, le, contains, startsWith, endsWith)
 filter {age: {gt: 30}} data
@@ -58,7 +58,7 @@ take {last: 5} data
 | Pipeline: fetch, navigate, filter, select, sort
 sort "name" select ["player.name", "goals"]
   filter {goals: {gt: 10}} get "top_scorers"
-  fetch "https://example.com/stats.json"
+  fetch "https://l0170.graffiticode.org/data/stats.json"
 ```
 
 ## Development

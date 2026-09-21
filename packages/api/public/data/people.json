@@ -1,0 +1,322 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Nguyen",
+    "first": "Alice",
+    "last": "Nguyen",
+    "age": 29,
+    "email": "alice.nguyen@example.org",
+    "department": "Sales",
+    "salary": 107000,
+    "score": 37,
+    "address": {
+      "street": "111 Main St",
+      "city": "Riverton",
+      "zip": "84065"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Bob Okafor",
+    "first": "Bob",
+    "last": "Okafor",
+    "age": 36,
+    "email": "bob.okafor@example.org",
+    "department": "Marketing",
+    "salary": 106000,
+    "score": 74,
+    "address": {
+      "street": "122 Main St",
+      "city": "Fairview",
+      "zip": "37062"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Carmen Silva",
+    "first": "Carmen",
+    "last": "Silva",
+    "age": 43,
+    "email": "carmen.silva@example.org",
+    "department": "Support",
+    "salary": 105000,
+    "score": 11,
+    "address": {
+      "street": "133 Main St",
+      "city": "Springfield",
+      "zip": "65801"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Deepak Patel",
+    "first": "Deepak",
+    "last": "Patel",
+    "age": 50,
+    "email": "deepak.patel@example.org",
+    "department": "Finance",
+    "salary": 104000,
+    "score": 48,
+    "address": {
+      "street": "144 Main St",
+      "city": "Madison",
+      "zip": "53703"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Elena Kowalski",
+    "first": "Elena",
+    "last": "Kowalski",
+    "age": 57,
+    "email": "elena.kowalski@example.org",
+    "department": "Engineering",
+    "salary": 103000,
+    "score": 85,
+    "address": {
+      "street": "155 Main St",
+      "city": "Springfield",
+      "zip": "62701"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Farid Haddad",
+    "first": "Farid",
+    "last": "Haddad",
+    "age": 23,
+    "email": "farid.haddad@example.org",
+    "department": "Sales",
+    "salary": 102000,
+    "score": 22,
+    "address": {
+      "street": "166 Main St",
+      "city": "Riverton",
+      "zip": "84065"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Grace Lee",
+    "first": "Grace",
+    "last": "Lee",
+    "age": 30,
+    "email": "grace.lee@example.org",
+    "department": "Marketing",
+    "salary": 101000,
+    "score": 59,
+    "address": {
+      "street": "177 Main St",
+      "city": "Fairview",
+      "zip": "37062"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Hiro Tanaka",
+    "first": "Hiro",
+    "last": "Tanaka",
+    "age": 37,
+    "email": "hiro.tanaka@example.org",
+    "department": "Support",
+    "salary": 100000,
+    "score": 96,
+    "address": {
+      "street": "188 Main St",
+      "city": "Springfield",
+      "zip": "65801"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Ines Moreau",
+    "first": "Ines",
+    "last": "Moreau",
+    "age": 44,
+    "email": "ines.moreau@example.org",
+    "department": "Finance",
+    "salary": 99000,
+    "score": 33,
+    "address": {
+      "street": "199 Main St",
+      "city": "Madison",
+      "zip": "53703"
+    }
+  },
+  {
+    "id": 10,
+    "name": "James Brown",
+    "first": "James",
+    "last": "Brown",
+    "age": 51,
+    "email": "james.brown@example.org",
+    "department": "Engineering",
+    "salary": 98000,
+    "score": 70,
+    "address": {
+      "street": "210 Main St",
+      "city": "Springfield",
+      "zip": "62701"
+    }
+  },
+  {
+    "id": 11,
+    "name": "Jasmine Jones",
+    "first": "Jasmine",
+    "last": "Jones",
+    "age": 58,
+    "email": "jasmine.jones@example.org",
+    "department": "Sales",
+    "salary": 97000,
+    "score": 7,
+    "address": {
+      "street": "221 Main St",
+      "city": "Riverton",
+      "zip": "84065"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Kofi Mensah",
+    "first": "Kofi",
+    "last": "Mensah",
+    "age": 24,
+    "email": "kofi.mensah@example.org",
+    "department": "Marketing",
+    "salary": 96000,
+    "score": 44,
+    "address": {
+      "street": "232 Main St",
+      "city": "Fairview",
+      "zip": "37062"
+    }
+  },
+  {
+    "id": 13,
+    "name": "Lena Schmidt",
+    "first": "Lena",
+    "last": "Schmidt",
+    "age": 31,
+    "email": "lena.schmidt@example.org",
+    "department": "Support",
+    "salary": 95000,
+    "score": 81,
+    "address": {
+      "street": "243 Main St",
+      "city": "Springfield",
+      "zip": "65801"
+    }
+  },
+  {
+    "id": 14,
+    "name": "Mateo Garcia",
+    "first": "Mateo",
+    "last": "Garcia",
+    "age": 38,
+    "email": "mateo.garcia@example.org",
+    "department": "Finance",
+    "salary": 94000,
+    "score": 18,
+    "address": {
+      "street": "254 Main St",
+      "city": "Madison",
+      "zip": "53703"
+    }
+  },
+  {
+    "id": 15,
+    "name": "Nadia Ivanova",
+    "first": "Nadia",
+    "last": "Ivanova",
+    "age": 45,
+    "email": "nadia.ivanova@example.org",
+    "department": "Engineering",
+    "salary": 93000,
+    "score": 55,
+    "address": {
+      "street": "265 Main St",
+      "city": "Springfield",
+      "zip": "62701"
+    }
+  },
+  {
+    "id": 16,
+    "name": "Omar Farouk",
+    "first": "Omar",
+    "last": "Farouk",
+    "age": 52,
+    "email": "omar.farouk@example.org",
+    "department": "Sales",
+    "salary": 92000,
+    "score": 92,
+    "address": {
+      "street": "276 Main St",
+      "city": "Riverton",
+      "zip": "84065"
+    }
+  },
+  {
+    "id": 17,
+    "name": "Priya Rao",
+    "first": "Priya",
+    "last": "Rao",
+    "age": 59,
+    "email": "priya.rao@example.org",
+    "department": "Marketing",
+    "salary": 91000,
+    "score": 29,
+    "address": {
+      "street": "287 Main St",
+      "city": "Fairview",
+      "zip": "37062"
+    }
+  },
+  {
+    "id": 18,
+    "name": "Quinn Murphy",
+    "first": "Quinn",
+    "last": "Murphy",
+    "age": 25,
+    "email": "quinn.murphy@example.org",
+    "department": "Support",
+    "salary": 90000,
+    "score": 66,
+    "address": {
+      "street": "298 Main St",
+      "city": "Springfield",
+      "zip": "65801"
+    }
+  },
+  {
+    "id": 19,
+    "name": "Rosa Diaz",
+    "first": "Rosa",
+    "last": "Diaz",
+    "age": 32,
+    "email": "rosa.diaz@example.org",
+    "department": "Finance",
+    "salary": 89000,
+    "score": 3,
+    "address": {
+      "street": "309 Main St",
+      "city": "Madison",
+      "zip": "53703"
+    }
+  },
+  {
+    "id": 20,
+    "name": "Sam Cohen",
+    "first": "Sam",
+    "last": "Cohen",
+    "age": 39,
+    "email": "sam.cohen@example.org",
+    "department": "Engineering",
+    "salary": 88000,
+    "score": 40,
+    "address": {
+      "street": "320 Main St",
+      "city": "Springfield",
+      "zip": "62701"
+    }
+  }
+]

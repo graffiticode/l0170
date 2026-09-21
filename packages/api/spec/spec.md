@@ -32,8 +32,8 @@ Fetches data from a URL. Auto-detects JSON or CSV format. CSV files are parsed
 into arrays of objects with column headers as keys and numbers auto-converted.
 
 ```
-fetch "https://example.com/data.json"
-fetch "https://example.com/data.csv"
+fetch "https://l0170.graffiticode.org/data/people.json"
+fetch "https://l0170.graffiticode.org/data/iris.csv"
 ```
 
 ### filter
@@ -220,7 +220,7 @@ array, it automatically descends into each element and collects results.
 ```
 get "address.city" data
 get "departments.teams.name" data
-get "results" fetch "https://example.com/api.json"
+get "results.items" fetch "https://l0170.graffiticode.org/data/api.json"
 ```
 
 ### flatten
@@ -290,16 +290,16 @@ format {price: "$#,##0.00", qty: "#,##0"} data
 ## Program Examples
 
 ```
-fetch "https://jsonplaceholder.typicode.com/users"..
+fetch "https://l0170.graffiticode.org/data/users.json"..
 ```
 
 ```
-select ["name", "email"] sort "name" fetch "https://example.com/users.json"..
+select ["name", "email"] sort "name" fetch "https://l0170.graffiticode.org/data/users.json"..
 ```
 
 ```
 take 5 sort {field: "goals", order: "desc"} select ["player.name", "goals"]
-  filter {goals: {gt: 10}} get "top_scorers" fetch "https://example.com/stats.json"..
+  filter {goals: {gt: 10}} get "top_scorers" fetch "https://l0170.graffiticode.org/data/stats.json"..
 ```
 
 ```

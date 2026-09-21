@@ -6,7 +6,7 @@
   ],
   "example_prompts": [
     {
-      "prompt": "Fetch https://example.com/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name.",
+      "prompt": "Fetch https://l0170.graffiticode.org/data/people.json and keep only rows where age is greater than 30. Select name and age. Sort by name.",
       "produces": "data_pipeline",
       "notes": "Names the URL, the predicate (greater than 30), the projection, and the sort order — no ambiguity about the pipeline shape or the final field set."
     },
@@ -16,7 +16,7 @@
       "notes": "Specifies two aggregations (count and average-with-round), the sort direction, and the row limit — exercises the full group/sort/take triad in one request."
     },
     {
-      "prompt": "Fetch https://example.com/orders.csv and join it with https://example.com/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100.",
+      "prompt": "Fetch https://l0170.graffiticode.org/data/orders.csv and join it with https://l0170.graffiticode.org/data/customers.csv on customerId. Select customer name, order date, and total. Filter to orders where total is at least 100.",
       "produces": "data_pipeline",
       "notes": "Names both fetch URLs, the join key, the final projection, and the post-join filter — the canonical two-source join pipeline."
     },
@@ -26,7 +26,7 @@
       "notes": "Uses the `in` list predicate and a comparison predicate together, adds a mutated column with arithmetic, and applies Excel-style currency formatting — covers filter / mutate / format in one go."
     },
     {
-      "prompt": "Fetch https://example.com/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId.",
+      "prompt": "Fetch https://l0170.graffiticode.org/data/nested.json, navigate into results.users, flatten the orders field, and deduplicate by orderId.",
       "produces": "data_pipeline",
       "notes": "Drills into nested data with a dot-path, unnests a nested array, and deduplicates — covers get / flatten / unique for hierarchical input."
     },

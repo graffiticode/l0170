@@ -37,7 +37,7 @@ L0170 is a Graffiticode dialect for data transformation, inspired by dplyr and j
 
 - Filter with list: `filter {category: {in: ["books" "music"]}} data..`
 - Exclude by list: `filter {code: {nin: ["WLD" "OED" "PST"]}} data..`
-- Fetch and filter: `filter {age: {gt: 30}} fetch "https://example.com/people.json"..`
-- Navigate and select: `select ["name", "email"] get "users" fetch "https://example.com/api.json"..`
+- Fetch and filter: `filter {age: {gt: 30}} fetch "https://l0170.graffiticode.org/data/people.json"..`
+- Navigate and select: `select ["name", "email"] get "users" fetch "https://l0170.graffiticode.org/data/api.json"..`
 - Group and sort: `sort {field: "n", order: "desc"} group {by: "category", count: "n"} data..`
 - Top N: `take 5 sort {field: "score", order: "desc"} data..`
