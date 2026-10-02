@@ -12,6 +12,9 @@ describe("routes/auth", () => {
     validateToken = jest.fn();
 
     app = express();
+    // As in app.js: body parsing runs before the auth handler, which reads
+    // a token from req.body as well as the query and headers.
+    app.use(express.json());
     app.use(buildAuthHandler({ validateToken }));
     app.get("/", (req, res) => {
       res.status(200).json({ auth: req.auth });

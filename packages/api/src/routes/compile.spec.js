@@ -1,81 +1,36 @@
 // SPDX-License-Identifier: MIT
-import { startAuthApp } from "@graffiticode/auth/testing";
 import request from "supertest";
 import { createApp } from "../app.js";
-import { TASK1, DATA1, TASK2, DATA2 } from "../testing/fixture.js";
-import { startLangApp } from "../testing/lang.js";
-import { createSuccessResponse, createErrorResponse, createError } from "./utils.js";
+import { TASK1 } from "../testing/fixture.js";
 
+// POST /compile takes { code, data } and compiles locally; it does not call
+// out to other language servers or require auth (see routes/compile.js).
 describe("routes/compile", () => {
-  let langApp;
-  let authApp;
   let app;
-
-  beforeEach(async () => {
-    langApp = await startLangApp();
-    authApp = await startAuthApp();
-    app = createApp({ authUrl: authApp.url });
-
-    process.env.BASE_URL_L0170 = langApp.url;
+  beforeEach(() => {
+    app = createApp();
   });
 
-  afterEach(async () => {
-    await authApp.cleanUp();
-    await langApp.cleanUp();
-  });
-
-  it("should compile source", async () => {
-    langApp.setData(TASK1.code, DATA1);
+  it("compiles code and data", async () => {
     const res = await request(app)
       .post("/compile")
-      .send({ item: TASK1 });
+      .send({ code: TASK1.code, data: {} })
+      .expect(200);
 
-    expect(res.body).toEqual(
-      expect.objectContaining(
-        createSuccessResponse({ data: DATA1 })
-      )
-    );
+    expect(res.body).toEqual({ data: { result: "hello, world!" }, errors: [] });
+    expect(res.headers["access-control-allow-origin"]).toBe("*");
   });
 
-  it("should compile item", async () => {
-    langApp.setData(TASK1.code, DATA1);
-    const res = await request(app)
-      .post("/compile")
-      .send({ item: { ...TASK1, data: {} } });
-
-    expect(res.body).toEqual(
-      expect.objectContaining(
-        createSuccessResponse({ data: DATA1 })
-      )
-    );
+  it("answers 400 when code or data is missing", async () => {
+    const missing = { error: "Missing required parameters: code and data" };
+    await request(app).post("/compile").send({ code: TASK1.code }).expect(400, missing);
+    await request(app).post("/compile").send({ data: {} }).expect(400, missing);
   });
 
-  it.skip("should compile multiple items", async () => {
-    let res;
-    res = await request(app)
-      .post("/task")
-      .send({ task: TASK1 })
-      .expect(200);
-    expect(res).toHaveProperty("body.status", "success");
-    const taskId1 = res.body.data.id;
-
-    res = await request(app)
-      .post("/task")
-      .send({ task: TASK2 })
-      .expect(200);
-    expect(res).toHaveProperty("body.status", "success");
-    const taskId2 = res.body.data.id;
-
+  it("answers 400 to the old { item } request shape", async () => {
     await request(app)
       .post("/compile")
-      .send([{ id: taskId1, data: { a: 10 } }, { id: taskId2, data: { b: 20 } }])
-      .expect(200, createSuccessResponse({ data: [DATA1, DATA2] }));
-  });
-
-  it("should return invalid argument for no item", async () => {
-    await request(app)
-      .post("/compile")
-      .send({ item: null })
-      .expect(400, createErrorResponse(createError(400, "item must be a non-null object")));
+      .send({ item: { ...TASK1, data: {} } })
+      .expect(400, { error: "Missing required parameters: code and data" });
   });
 });

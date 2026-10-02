@@ -1,23 +1,19 @@
 // SPDX-License-Identifier: MIT
-import { jest } from "@jest/globals";
-import { buildCompile } from "./compile.js";
-import { DATA1, TASK1 } from "./testing/fixture.js";
+import { compile } from "./compile.js";
+import { TASK1 } from "./testing/fixture.js";
 
+// compile() runs the L0170 compiler locally on { code, data } and answers the
+// standard envelope: output in `data`, compile errors in `errors` (an array).
 describe("compile", () => {
-  describe("compile", () => {
-    let langCompile;
-    let compile;
-    beforeEach(() => {
-      langCompile = jest.fn();
-      compile = buildCompile({ langCompile });
+  it("compiles code and data to a { data, errors } envelope", async () => {
+    await expect(compile({ code: TASK1.code, data: {} })).resolves.toEqual({
+      data: { result: "hello, world!" },
+      errors: [],
     });
+  });
 
-    it("should call langCompile", async () => {
-      langCompile.mockResolvedValue(DATA1);
-
-      await expect(compile({ ...TASK1 })).resolves.toBe(DATA1);
-
-      expect(langCompile).toHaveBeenCalledWith(`L${TASK1.lang}`, { code: TASK1.code, data: {}, auth: null, options: {} });
-    });
+  it("requires both code and data", async () => {
+    await expect(compile({ code: TASK1.code })).rejects.toThrow("Missing required parameters: code and data");
+    await expect(compile({ data: {} })).rejects.toThrow("Missing required parameters: code and data");
   });
 });

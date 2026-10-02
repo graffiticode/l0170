@@ -26,6 +26,7 @@ describe("auth", () => {
   it("should return uid from auth app", async () => {
     const { accessToken: token } = await authApp.authService.generateTokens({ uid: "1" });
 
-    await expect(validateToken(token)).resolves.toStrictEqual({ uid: "1" });
+    // The auth service answers { uid, token }; callers use uid (routes/auth.js).
+    await expect(validateToken(token)).resolves.toMatchObject({ uid: "1", token: { sub: "1" } });
   });
 });

@@ -18,9 +18,11 @@ describe("api", () => {
   });
 
   it("GET /", (done) => {
+    // The body is the built front end when dist/ exists (express.static runs
+    // first) and the root route's "OK" when it does not; 200 is the contract.
     request(app)
       .get("/")
-      .expect(200, "OK", done);
+      .expect(200, done);
   });
 
   it("GET / with auth token", async () => {
